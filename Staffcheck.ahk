@@ -179,7 +179,3 @@ IfMsgBox, Yes
 ; Staffcheck complete
 MsgBox, 0, Staffcheck complete, Press OK to exit the script
 exit
-
-; 863914391065853983
-
-;msgbox to add GT to notes anyway
