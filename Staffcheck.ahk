@@ -28,7 +28,7 @@ Sleep, 100
 Send, %commandschannel%
 Sleep, 120
 Send, {enter}
-Sleep, 1300
+Sleep, 10000
 
 ; Delete all text in msg box
 
@@ -91,23 +91,23 @@ if (RGBcolour == 0x49443C) {
 } else {
     OutputDebug, not adding GT to notes
 }
-MsgBox, 0, Elemental commands, Press OK once you have looked through the basic commands
+MsgBox, 0, Elemental commands, Press OK once you have looked through the Elemental commands
 
 ; Ashen commands
 
 Send, {!}search %userID%{enter}
 Sleep, 50
 Send, {!}xsearch %XboxGT%{enter}
-MsgBox, 0, Elemental commands, Press OK once you have looked through the basic commands
+MsgBox, 0, Ashen commands, Press OK once you have looked through the Ashen commands
 
 ; Invite Tracker
 
 Send, ^k
 Sleep, 100
-Send, %commandschannel%
+Send, %invitetracker%
 Sleep, 120
 Send, {enter}
-Sleep, 1300
+Sleep, 10000
 Send, ^f
 Sleep, 150
 Send, ^a{Backspace}
