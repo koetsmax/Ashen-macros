@@ -7,6 +7,7 @@ SetTitleMatchMode, slow
 
 commandschannel = {#}command-testing
 invitetracker = {#}invite-tracker
+sotofficial = {#}official-swag
 info = info data
 lhist = loghistory full
 noteslist = notes list
@@ -24,9 +25,9 @@ WinActivate, ahk_exe Discord.exe
 Send, {Escape}
 Sleep, 120
 Send, ^k
-Sleep, 100
-Send, %commandschannel%
 Sleep, 120
+Send, %commandschannel%
+Sleep, 300
 Send, {enter}
 Sleep, 10000
 
@@ -95,17 +96,20 @@ MsgBox, 0, Elemental commands, Press OK once you have looked through the Element
 
 ; Ashen commands
 
+WinActivate, ahk_exe Discord.exe
 Send, {!}search %userID%{enter}
 Sleep, 150
 Send, {!}xsearch %XboxGT%{enter}
+Sleep, 150
 MsgBox, 0, Ashen commands, Press OK once you have looked through the Ashen commands
 
 ; Invite Tracker
 
+WinActivate, ahk_exe Discord.exe
 Send, ^k
 Sleep, 100
 Send, %invitetracker%
-Sleep, 120
+Sleep, 300
 Send, {enter}
 Sleep, 10000
 Send, ^f
@@ -120,6 +124,35 @@ Sleep, 80
 Send, {enter}
 MsgBox, 0, Invite Tracker, Press OK once you have looked through the invite tracker
 
+; Check sot official posts
+
+WinActivate, ahk_exe Discord.exe
+Send, ^a{Backspace}
+Send, {Escape}
+Sleep, 150
+Send, ^k
+Sleep, 100
+Send, %sotofficial%
+Sleep, 300
+Send, {enter}
+Sleep, 10000
+Send, ^f
+Sleep, 150
+Send, ^a{Backspace}
+Sleep, 120
+Send, from: %userID% 
+Sleep, 150
+Send, {enter}
+MsgBox, 0, Sot Official, Press YES if there are no Anti-alliance messages, press NO if there are a lot of messages and the search results need to be narrowed down.
+IfMsgBox, No
+    WinActivate, ahk_exe Discord.exe
+    Send, {Space}alliance
+    Sleep, 100
+    Send, {enter}
+    MsgBox, 0, Sot Official, Press OK Once you have looked through their messages in Sot Official
+
+
+OutputDebug, bruh
 
 
 exit
