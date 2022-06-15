@@ -96,7 +96,7 @@ MsgBox, 0, Elemental commands, Press OK once you have looked through the Element
 ; Ashen commands
 
 Send, {!}search %userID%{enter}
-Sleep, 50
+Sleep, 150
 Send, {!}xsearch %XboxGT%{enter}
 MsgBox, 0, Ashen commands, Press OK once you have looked through the Ashen commands
 
@@ -116,6 +116,8 @@ Sleep, 150
 Send, ^f
 Sleep, 120
 Send, %userID%
+Sleep, 80
+Send, {enter}
 MsgBox, 0, Invite Tracker, Press OK once you have looked through the invite tracker
 
 
