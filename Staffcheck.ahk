@@ -102,25 +102,7 @@ if (RGBcolour == 0x49443C) {
     Send, GT: %XboxGT%
     Sleep, 300
     Send, {enter}{enter}
-} else if (RGBcolour == 0xFFFFFF){
-    MsgBox, 4, Pixelcheck failed, Press Yes to add GT to notes anyway if necessary
-    IfMsgBox, Yes
-    {
-        OutputDebug, Pixelcheck failed, add GT to notes anyway
-        Sleep, 150
-        Send, /%notesnew%
-        Sleep, 1200
-        Send, {enter}
-        Sleep, 500
-        Send, %userID%
-        Sleep, 500
-        Send, {enter}
-        Sleep, 500
-        Send, GT: %XboxGT%
-        Sleep, 300
-        Send, {enter}{enter}
-    }
-} else if (RGBcolour == 0x32353B Or 0x36393F){
+} else if (RGBcolour == 0x32353B){
     OutputDebug, not adding GT to notes
     MsgBox, 4, Add note with GT?, Press YES to place a note with the gamertag if the autoplacement failed.
     IfMsgBox, Yes
@@ -139,7 +121,45 @@ if (RGBcolour == 0x49443C) {
         Sleep, 300
         Send, {enter}{enter}
     }
+} else if (RGBcolour == 0x36393F){
+    OutputDebug, not adding GT to notes
+    MsgBox, 4, Add note with GT?, Press YES to place a note with the gamertag if the autoplacement failed.
+    IfMsgBox, Yes
+    {
+        OutputDebug, Adding GT to notes
+        Sleep, 150
+        Send, /%notesnew%
+        Sleep, 1200
+        Send, {enter}
+        Sleep, 500
+        Send, %userID%
+        Sleep, 500
+        Send, {enter}
+        Sleep, 500
+        Send, GT: %XboxGT%
+        Sleep, 300
+        Send, {enter}{enter}
+    }
+} else {
+    MsgBox, 4, Pixelcheck failed, Press Yes to add GT to notes anyway if necessary
+    IfMsgBox, Yes
+    {
+        OutputDebug, Pixelcheck failed, add GT to notes anyway
+        Sleep, 150
+        Send, /%notesnew%
+        Sleep, 1200
+        Send, {enter}
+        Sleep, 500
+        Send, %userID%
+        Sleep, 500
+        Send, {enter}
+        Sleep, 500
+        Send, GT: %XboxGT%
+        Sleep, 300
+        Send, {enter}{enter}
+    }
 }
+
 MsgBox, 0, Elemental commands, Press OK once you have looked through the Elemental commands
 
 ; Ashen commands
