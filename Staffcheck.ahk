@@ -6,6 +6,13 @@ SetTitleMatchMode, slow
 
 MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 
+
+; Versioning
+
+programName = Staffcheck
+programVersion = 1.3.0
+fullProgramName = Staffcheck V1.3.0
+
 ; Variables
 
 ondutychat = {#}on-duty-chat
@@ -284,6 +291,6 @@ IfMsgBox, No
 }
 
 OutputDebug, Script finished
-exit
+ExitApp
 Return
 #x::ExitApp
