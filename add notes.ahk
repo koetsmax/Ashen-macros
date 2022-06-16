@@ -2,6 +2,7 @@
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
 
+
 MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 
 ; Versioning
@@ -85,6 +86,7 @@ Loop, parse, userIDs, `.
 }
 MsgBox, No Next ID found. Script is finished
 OutputDebug, Script finished
+
 ExitApp
 Return
 #x::ExitApp
