@@ -211,8 +211,8 @@ IfMsgBox, Yes
     Send, {Space}alliance
     Sleep, 100
     Send, {enter}
+    OutputDebug, narrowed search in sot official
     MsgBox, 0, Sot Official, Press OK Once you have looked through their messages in Sot Official
-    OutputDebug, opened narrowed search
 }
 
 
