@@ -259,7 +259,8 @@ IfMsgBox, Yes
     Send, ^a{Backspace}
     Sleep, 100
     Send, <@%userID%> Good to check -- GT: %XboxGT%
-    Sleep, 2500
+    Sleep, 3500
+    Send, {enter}
     OutputDebug, Good to check message sent
 }
 IfMsgBox, No
@@ -277,18 +278,12 @@ IfMsgBox, No
     Send, ^a{Backspace}
     Sleep, 100
     Send, <@%userID%> **Not** good to check -- GT: %XboxGT% -- Reason: %Reason%
-    Sleep, 2500
+    Sleep, 3500
+    Send, {enter}
     OutputDebug, Not good to check message sent
 }
 
-
-
-
-MsgBox, 0, Staffcheck complete, Press OK to exit the script
-IfMsgBox, OK
-{
-    OutputDebug, Script finished
-    exit
-}
+OutputDebug, Script finished
+exit
 Return
 #x::ExitApp
