@@ -27,6 +27,7 @@ OutputDebug, input received
 ; Activate Discord.exe and move to on-duty-commands
 
 WinActivate, ahk_exe Discord.exe
+OutputDebug, entered discord
 Send, {Escape}
 Sleep, 120
 Send, {Escape}
@@ -36,8 +37,8 @@ Sleep, 120
 Send, %commandschannel%
 Sleep, 300
 Send, {enter}
+OutputDebug, Opened on-duty-commands
 Sleep, 10000
-OutputDebug, entered discord
 
 ; Delete all text in msg box
 
@@ -144,22 +145,25 @@ MsgBox, 0, Elemental commands, Press OK once you have looked through the Element
 ; Ashen commands
 
 WinActivate, ahk_exe Discord.exe
+OutputDebug, entered discord
 Sleep, 250
 Send, {!}search %userID%{enter}
 Sleep, 250
 Send, {!}xsearch %XboxGT%{enter}
 Sleep, 250
-MsgBox, 0, Ashen commands, Press OK once you have looked through the Ashen commands
 OutputDebug, !search and !xsearch done
+MsgBox, 0, Ashen commands, Press OK once you have looked through the Ashen commands
 
 ; Invite Tracker
 
 WinActivate, ahk_exe Discord.exe
+OutputDebug, entered discord
 Send, ^k
 Sleep, 100
 Send, %invitetracker%
 Sleep, 300
 Send, {enter}
+OutputDebug, Opened invite tracker
 Sleep, 10000
 Send, ^f
 Sleep, 150
@@ -171,12 +175,14 @@ Sleep, 120
 Send, %userID%
 Sleep, 80
 Send, {enter}
+OutputDebug, Searched invite tracker
 MsgBox, 0, Invite Tracker, Press OK once you have looked through the invite tracker
-OutputDebug, opened invite tracker
+
 
 ; Check sot official posts
 
 WinActivate, ahk_exe Discord.exe
+OutputDebug, entered discord
 Send, ^a{Backspace}
 Send, {Escape}
 Sleep, 150
@@ -185,6 +191,7 @@ Sleep, 100
 Send, %sotofficial%
 Sleep, 300
 Send, {enter}
+OutputDebug, Opened sot official
 Sleep, 10000
 Send, ^f
 Sleep, 150
@@ -198,6 +205,7 @@ MsgBox, 4, Sot Official, Press YES if there are a lot of messages and the search
 IfMsgBox, Yes
 {
     WinActivate, ahk_exe Discord.exe
+    OutputDebug, entered discord
     Send, ^f
     Sleep, 300
     Send, {Space}alliance
@@ -210,7 +218,10 @@ IfMsgBox, Yes
 
 ; Staffcheck complete
 MsgBox, 0, Staffcheck complete, Press OK to exit the script
-OutputDebug, Script finished
-exit
+IfMsgBox, OK
+{
+    OutputDebug, Script finished
+    exit
+}
 Return
 #x::ExitApp
