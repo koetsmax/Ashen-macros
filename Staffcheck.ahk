@@ -8,6 +8,7 @@ MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 
 ; Variables
 
+ondutychat = {#}on-duty-chat
 commandschannel = {#}on-duty-commands
 invitetracker = {#}invite-tracker
 sotofficial = {#}official-swag
@@ -237,6 +238,52 @@ IfMsgBox, Yes
 
 
 ; Staffcheck complete
+WinActivate, ahk_exe Discord.exe
+Sleep, 250
+Send, ^a{Backspace}
+Sleep, 100
+Send, {Escape}
+Sleep, 100
+MsgBox, 4, Good to check?, Is this person good to check
+IfMsgBox, Yes
+{
+    Send, ^k
+    Sleep, 100
+    Send, %ondutychat%
+    Sleep, 300
+    Send, {enter}
+    OutputDebug, Opened ondutychat
+    Sleep, 10000
+    Send, a
+    Sleep, 150
+    Send, ^a{Backspace}
+    Sleep, 100
+    Send, <@%userID%> Good to check -- GT: %XboxGT%
+    Sleep, 2500
+    OutputDebug, Good to check message sent
+}
+IfMsgBox, No
+{
+    InputBox, Reason, Reason, Please enter the Reason that the user is not good to check, , , 125
+    Send, ^k
+    Sleep, 100
+    Send, %ondutychat%
+    Sleep, 300
+    Send, {enter}
+    OutputDebug, Opened ondutychat
+    Sleep, 10000
+    Send, a
+    Sleep, 150
+    Send, ^a{Backspace}
+    Sleep, 100
+    Send, <@%userID%> **Not** good to check -- GT: %XboxGT% -- Reason: %Reason%
+    Sleep, 2500
+    OutputDebug, Not good to check message sent
+}
+
+
+
+
 MsgBox, 0, Staffcheck complete, Press OK to exit the script
 IfMsgBox, OK
 {
