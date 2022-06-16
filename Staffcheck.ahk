@@ -4,6 +4,8 @@ SetWorkingDir, %A_ScriptDir%
 SetTitleMatchMode, slow
 
 
+MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
+
 ; Variables
 
 commandschannel = {#}command-testing
@@ -13,12 +15,14 @@ info = info data
 lhist = loghistory full
 noteslist = notes list
 notesnew = notes new
+OutputDebug, Variables loaded
 
 ; User input of GamerTag
 
 InputBox, userID, UserID, Please enter the ID of the user to staffcheck, , , 125
 InputBox, XboxGT, Xbox Gamertag, Please enter the Xbox Gamertag of the user to Staffcheck, , , 125
 Sleep, 1500
+OutputDebug, input received
 
 ; Activate Discord.exe and move to on-duty-commands
 
@@ -33,6 +37,7 @@ Send, %commandschannel%
 Sleep, 300
 Send, {enter}
 Sleep, 10000
+OutputDebug, entered discord
 
 ; Delete all text in msg box
 
@@ -50,6 +55,7 @@ Sleep, 500
 Send, %userID%
 Sleep, 300
 Send, {enter}{enter}
+OutputDebug, executed info data user
 
 ; check log hist
 
@@ -61,6 +67,7 @@ Sleep, 500
 Send, %userID%
 Sleep, 300
 Send, {enter}{enter}
+OutputDebug, executed log history
 
 ; check notes
 
@@ -72,8 +79,10 @@ Sleep, 500
 Send, %userID%
 Sleep, 300
 Send, {enter}{enter}
+OutputDebug, executed notes list
 
 ; add GT to notes if needed
+
 
 Sleep, 2500
 PixelGetColor, RGBcolour, 963, 1791, RGB
@@ -92,7 +101,25 @@ if (RGBcolour == 0x49443C) {
     Send, GT: %XboxGT%
     Sleep, 300
     Send, {enter}{enter}
-} else {
+} else if (RGBcolour == 0xFFFFFF){
+    MsgBox, 4, Pixelcheck failed, Press Yes to add GT to notes anyway if necessary
+    IfMsgBox, Yes
+    {
+        OutputDebug, Pixelcheck failed, add GT to notes anyway
+        Sleep, 150
+        Send, /%notesnew%
+        Sleep, 1200
+        Send, {enter}
+        Sleep, 500
+        Send, %userID%
+        Sleep, 500
+        Send, {enter}
+        Sleep, 500
+        Send, GT: %XboxGT%
+        Sleep, 300
+        Send, {enter}{enter}
+    }
+} else if (RGBcolour == 0x32353B Or 0x36393F){
     OutputDebug, not adding GT to notes
     MsgBox, 4, Add note with GT?, Press YES to place a note with the gamertag if the autoplacement failed.
     IfMsgBox, Yes
@@ -123,6 +150,7 @@ Sleep, 250
 Send, {!}xsearch %XboxGT%{enter}
 Sleep, 250
 MsgBox, 0, Ashen commands, Press OK once you have looked through the Ashen commands
+OutputDebug, !search and !xsearch done
 
 ; Invite Tracker
 
@@ -144,6 +172,7 @@ Send, %userID%
 Sleep, 80
 Send, {enter}
 MsgBox, 0, Invite Tracker, Press OK once you have looked through the invite tracker
+OutputDebug, opened invite tracker
 
 ; Check sot official posts
 
@@ -164,6 +193,7 @@ Sleep, 120
 Send, from: %userID% 
 Sleep, 150
 Send, {enter}
+OutputDebug, Opened SOT official messages
 MsgBox, 4, Sot Official, Press YES if there are a lot of messages and the search results need to be narrowed down. press NO if there are no Anti-alliance messages.
 IfMsgBox, Yes
 {
@@ -174,8 +204,13 @@ IfMsgBox, Yes
     Sleep, 100
     Send, {enter}
     MsgBox, 0, Sot Official, Press OK Once you have looked through their messages in Sot Official
+    OutputDebug, opened narrowed search
 }
+
 
 ; Staffcheck complete
 MsgBox, 0, Staffcheck complete, Press OK to exit the script
+OutputDebug, Script finished
 exit
+Return
+#x::ExitApp
