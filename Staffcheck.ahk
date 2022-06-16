@@ -22,14 +22,15 @@ info = info data
 lhist = loghistory full
 noteslist = notes list
 notesnew = notes new
-OutputDebug, Variables loaded
+OutputDebug, Variables Initialized
 
-; User input of GamerTag
+; User input of userID & GamerTag
 
 InputBox, userID, UserID, Please enter the ID of the user to staffcheck, , , 125
 InputBox, XboxGT, Xbox Gamertag, Please enter the Xbox Gamertag of the user to Staffcheck, , , 125
-Sleep, 1500
 OutputDebug, input received
+Sleep, 1500
+
 
 ; Activate Discord.exe and move to on-duty-commands
 
