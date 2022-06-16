@@ -8,7 +8,7 @@ MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 
 ; Variables
 
-commandschannel = {#}command-testing
+commandschannel = {#}on-duty-commands
 invitetracker = {#}invite-tracker
 sotofficial = {#}official-swag
 info = info data
