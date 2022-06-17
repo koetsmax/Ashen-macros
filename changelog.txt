@@ -4,6 +4,7 @@
 ### Added
 - Added check for if staffcheck.ini doesn't exist
 - Added support for multiple pages of notes
+- Added readme
 
 ### Changed
 - Delay fine tuning
