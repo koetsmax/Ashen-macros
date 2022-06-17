@@ -5,10 +5,11 @@
 - Added check for if staffcheck.ini doesn't exist
 - Added support for multiple pages of notes
 - Added readme
+- Added Mass add warnings
 
 ### Changed
 - Delay fine tuning
-
+- Fixed mass add notes to point to correct channel
 
 ## [1.4.1] - 2022-06-17
 ### Added
