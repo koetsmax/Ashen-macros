@@ -9,7 +9,7 @@ MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 ; Versioning
 
 programName = Staffcheck
-programVersion = 1.3.1
+programVersion = 1.4.0
 fullProgramName = %programName% V%programVersion%
 
 ; Variables

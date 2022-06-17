@@ -2,9 +2,14 @@
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
 
+; Versioning
+
+programName = Customization
+programVersion = 1.0.0
+fullProgramName = %programName% V%programVersion%
+
 ; Variables
 
-boxcontent = Please enter your custom Good to check message here. to use emotes type the full name in between :: ex. :BetterTick: . Make sure to use the correct capitalization in the emote name. for the user ID to become an @ type <@`%userID`%>. and for the gamertag it is `%xboxGT`%
 userID = 272001404086910977
 xboxGT = M A X10815
 ondutychat = {#}on-duty-chat
