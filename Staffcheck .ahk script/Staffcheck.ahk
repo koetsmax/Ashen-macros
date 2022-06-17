@@ -9,7 +9,7 @@ MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 ; Versioning
 
 programName = Staffcheck
-programVersion = 1.3.1
+programVersion = 1.5.0
 fullProgramName = %programName% V%programVersion%
 
 ; Variables
@@ -22,15 +22,30 @@ info = info data
 lhist = loghistory full
 noteslist = notes list
 notesnew = notes new
+pagenumber = 1
 OutputDebug, Variables Initialized
+
+; Check if .ini file exists
+
+If !FileExist("staffcheck.ini")
+{
+    MsgBox, staffcheck.ini file not found. Creating file...
+    FileAppend, , staffcheck.ini
+    IniWrite, % "", staffcheck.ini, staffcheck, gtcbeforeid
+    IniWrite, Good to check -- GT:, staffcheck.ini, staffcheck, gtcafterid
+    IniWrite, % "", staffcheck.ini, staffcheck, gtcaftergt
+    IniWrite, % "", staffcheck.ini, staffcheck, notgtcbeforeid
+    IniWrite, **Not** Good to check -- GT:, staffcheck.ini, staffcheck, notgtcafterid
+    IniWrite, --, staffcheck.ini, staffcheck, notgtcaftergt
+    IniWrite, % "", staffcheck.ini, staffcheck, notgtcafterreason
+}
 
 ; User input of userID & GamerTag
 
 InputBox, userID, UserID, Please enter the ID of the user to staffcheck, , , 125
-InputBox, XboxGT, Xbox Gamertag, Please enter the Xbox Gamertag of the user to Staffcheck, , , 125
+InputBox, xboxGT, Xbox Gamertag, Please enter the Xbox Gamertag of the user to Staffcheck, , , 125
 OutputDebug, input received
 Sleep, 1500
-
 
 ; Activate Discord.exe and move to on-duty-commands
 
@@ -43,10 +58,10 @@ Sleep, 120
 Send, ^k
 Sleep, 120
 Send, %commandschannel%
-Sleep, 300
+Sleep, 350
 Send, {enter}
 OutputDebug, Opened on-duty-commands
-Sleep, 10000
+Sleep, 8000
 
 ; Delete all text in msg box
 
@@ -58,7 +73,7 @@ Send, ^a{Backspace}
 
 Sleep, 800
 Send, /%info%
-Sleep, 1200
+Sleep, 1600
 Send, {enter}user{enter}
 Sleep, 500
 Send, %userID%
@@ -70,7 +85,7 @@ OutputDebug, executed info data user
 
 Sleep, 150
 Send, /%lhist%
-Sleep, 1200
+Sleep, 1600
 Send, {enter}
 Sleep, 500
 Send, %userID%
@@ -82,13 +97,42 @@ OutputDebug, executed log history
 
 Sleep, 150
 Send, /%noteslist%
-Sleep, 1200
+Sleep, 1600
 Send, {enter}
 Sleep, 500
 Send, %userID%
 Sleep, 300
 Send, {enter}{enter}
 OutputDebug, executed notes list
+
+; Multiple pages of notes?
+
+Loop,
+{
+    MsgBox, 4, Another page of notes?, Press YES if there is another page of notes.
+    IfMsgBox, Yes
+    {
+        WinActivate, ahk_exe Discord.exe
+        pagenumber++
+        Sleep, 150
+        Send, /%noteslist%
+        Sleep, 1600
+        Send, {enter}
+        Sleep, 500
+        Send, %userID%
+        Sleep, 300
+        Send, {Tab}{Tab}{Tab}
+        Sleep, 300
+        Send, %pagenumber%
+        Sleep, 300
+        Send, {enter}
+    }
+    IfMsgBox, No
+    {
+        Break
+    }
+    
+}
 
 ; add GT to notes if needed
 
@@ -100,14 +144,14 @@ if (RGBcolour == 0x49443C) {
     OutputDebug, Adding GT to notes
     Sleep, 150
     Send, /%notesnew%
-    Sleep, 1200
+    Sleep, 1600
     Send, {enter}
     Sleep, 500
     Send, %userID%
     Sleep, 500
     Send, {enter}
     Sleep, 500
-    Send, GT: %XboxGT%
+    Send, GT: %xboxGT%
     Sleep, 300
     Send, {enter}{enter}
 } else if (RGBcolour == 0x32353B){
@@ -115,17 +159,18 @@ if (RGBcolour == 0x49443C) {
     MsgBox, 4, Add note with GT?, Press YES to place a note with the gamertag if the autoplacement failed.
     IfMsgBox, Yes
     {
+        WinActivate, ahk_exe Discord.exe
         OutputDebug, Adding GT to notes
         Sleep, 150
         Send, /%notesnew%
-        Sleep, 1200
+        Sleep, 1600
         Send, {enter}
         Sleep, 500
         Send, %userID%
         Sleep, 500
         Send, {enter}
         Sleep, 500
-        Send, GT: %XboxGT%
+        Send, GT: %xboxGT%
         Sleep, 300
         Send, {enter}{enter}
     }
@@ -134,17 +179,18 @@ if (RGBcolour == 0x49443C) {
     MsgBox, 4, Add note with GT?, Press YES to place a note with the gamertag if the autoplacement failed.
     IfMsgBox, Yes
     {
+        WinActivate, ahk_exe Discord.exe
         OutputDebug, Adding GT to notes
         Sleep, 150
         Send, /%notesnew%
-        Sleep, 1200
+        Sleep, 1600
         Send, {enter}
         Sleep, 500
         Send, %userID%
         Sleep, 500
         Send, {enter}
         Sleep, 500
-        Send, GT: %XboxGT%
+        Send, GT: %xboxGT%
         Sleep, 300
         Send, {enter}{enter}
     }
@@ -152,6 +198,7 @@ if (RGBcolour == 0x49443C) {
     MsgBox, 4, Pixelcheck failed, Press Yes to add GT to notes anyway if necessary
     IfMsgBox, Yes
     {
+        WinActivate, ahk_exe Discord.exe
         OutputDebug, Pixelcheck failed, add GT to notes anyway
         Sleep, 150
         Send, /%notesnew%
@@ -162,7 +209,7 @@ if (RGBcolour == 0x49443C) {
         Sleep, 500
         Send, {enter}
         Sleep, 500
-        Send, GT: %XboxGT%
+        Send, GT: %xboxGT%
         Sleep, 300
         Send, {enter}{enter}
     }
@@ -177,7 +224,7 @@ OutputDebug, entered discord
 Sleep, 250
 Send, {!}search %userID%{enter}
 Sleep, 250
-Send, {!}xsearch %XboxGT%{enter}
+Send, {!}xsearch %xboxGT%{enter}
 Sleep, 250
 OutputDebug, !search and !xsearch done
 MsgBox, 0, Ashen commands, Press OK once you have looked through the Ashen commands
@@ -189,10 +236,10 @@ OutputDebug, entered discord
 Send, ^k
 Sleep, 100
 Send, %invitetracker%
-Sleep, 300
+Sleep, 350
 Send, {enter}
 OutputDebug, Opened invite tracker
-Sleep, 10000
+Sleep, 8000
 Send, ^f
 Sleep, 150
 Send, ^a{Backspace}
@@ -217,10 +264,10 @@ Sleep, 150
 Send, ^k
 Sleep, 100
 Send, %sotofficial%
-Sleep, 300
+Sleep, 350
 Send, {enter}
 OutputDebug, Opened sot official
-Sleep, 10000
+Sleep, 8000
 Send, ^f
 Sleep, 150
 Send, ^a{Backspace}
@@ -254,37 +301,47 @@ Sleep, 100
 MsgBox, 4, Good to check?, Is this person good to check
 IfMsgBox, Yes
 {
+    IniRead, gtcbeforeid, staffcheck.ini , staffcheck, gtcbeforeid
+    IniRead, gtcafterid, staffcheck.ini , staffcheck, gtcafterid
+    IniRead, gtcaftergt, staffcheck.ini , staffcheck, gtcaftergt
+    OutputDebug, Read good to check message
+    Sleep, 150
     Send, ^k
     Sleep, 100
     Send, %ondutychat%
-    Sleep, 300
+    Sleep, 350
     Send, {enter}
     OutputDebug, Opened ondutychat
-    Sleep, 10000
+    Sleep, 8000
     Send, a
     Sleep, 150
     Send, ^a{Backspace}
     Sleep, 100
-    Send, <@%userID%> Good to check -- GT: %XboxGT%
+    Send, %gtcbeforeid% <@%userID%> %gtcafterid% %xboxGT% %gtcaftergt%
     Sleep, 3500
     Send, {enter}
     OutputDebug, Good to check message sent
 }
 IfMsgBox, No
 {
+    IniRead, notnotgtcbeforeid, staffcheck.ini , staffcheck, notgtcbeforeid
+    IniRead, notgtcafterid, staffcheck.ini , staffcheck, notgtcafterid
+    IniRead, notgtcaftergt, staffcheck.ini , staffcheck, notgtcaftergt
+    IniRead, notgtcafterreason, staffcheck.ini , staffcheck, notgtcafterreason
+
     InputBox, Reason, Reason, Please enter the Reason that the user is not good to check, , , 125
     Send, ^k
     Sleep, 100
     Send, %ondutychat%
-    Sleep, 300
+    Sleep, 350
     Send, {enter}
     OutputDebug, Opened ondutychat
-    Sleep, 10000
+    Sleep, 8000
     Send, a
     Sleep, 150
     Send, ^a{Backspace}
     Sleep, 100
-    Send, <@%userID%> **Not** good to check -- GT: %XboxGT% -- Reason: %Reason%
+    Send, %notgtcbeforeid% <@%userID%> %notgtcafterid% %xboxGT% %notgtcaftergt% %Reason% %notgtcafterreason%
     Sleep, 3500
     Send, {enter}
     OutputDebug, Not good to check message sent

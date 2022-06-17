@@ -1,0 +1,1 @@
+Make sure the .ini file and both .exe or .ahk files are in the same folder

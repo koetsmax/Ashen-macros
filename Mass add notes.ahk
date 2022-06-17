@@ -7,13 +7,13 @@ MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 
 ; Versioning
 
-programName = Add notes
-programVersion = 1.0.0
+programName = Mass add notes
+programVersion = 1.5.0
 fullProgramName = %programName% V%programVersion%
 
 ;variables 
 
-commandschannel = {#}command-testing
+commandschannel = {#}on-duty-commands
 noteslist = notes list
 notesnew = notes new
 OutputDebug, Variables Initialized
@@ -39,7 +39,7 @@ Send, %commandschannel%
 Sleep, 300
 Send, {enter}
 OutputDebug, Opened on-duty-commands
-Sleep, 10000
+Sleep, 8000
 Send, a
 Sleep, 150
 Send, ^a{Backspace}
@@ -81,7 +81,7 @@ Loop, parse, userIDs, `.
             MsgBox, 0, Skipping to next ID, Skipping to next ID
         }
     } Else {
-        MsgBox, userID contains Illegal characters
+        MsgBox, userID %A_LoopField% contains Illegal characters
     }
 }
 MsgBox, No Next ID found. Script is finished
