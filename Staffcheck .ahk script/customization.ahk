@@ -71,7 +71,7 @@ IfMsgBox, Yes
         Sleep, 300
         Send, {enter}
         OutputDebug, Opened ondutychat
-        Sleep, 6000
+        Sleep, 2000
         Send, a
         Sleep, 150
         Send, ^a{Backspace}
@@ -127,7 +127,7 @@ IfMsgBox, Yes
         Sleep, 300
         Send, {enter}
         OutputDebug, Opened ondutychat
-        Sleep, 6000
+        Sleep, 2000
         Send, a
         Sleep, 150
         Send, ^a{Backspace}

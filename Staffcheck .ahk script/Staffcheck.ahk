@@ -5,11 +5,10 @@ SetWorkingDir, %A_ScriptDir%
 
 MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 
-
 ; Versioning
 
 programName = Staffcheck
-programVersion = 1.5.0
+programVersion = 1.5.1
 fullProgramName = %programName% V%programVersion%
 
 ; Variables
@@ -45,6 +44,8 @@ If !FileExist("staffcheck.ini")
 InputBox, userID, UserID, Please enter the ID of the user to staffcheck, , , 125
 InputBox, xboxGT, Xbox Gamertag, Please enter the Xbox Gamertag of the user to Staffcheck, , , 125
 OutputDebug, input received
+MsgBox, 0, , DO NOT TOUCH YOUR MOUSE OR KEYBOARD WHEN THIS SCRIPT IS RUNNING. ONLY TOUCH YOUR MOUSE AND OR KEYBOARD WHEN ONE OF THESE BOXES HAVE POPPED UP. The script will now start
+MsgBox, 0, , There is a 2 second delay in between switching channels. So be wary of that
 Sleep, 1500
 
 ; Activate Discord.exe and move to on-duty-commands
@@ -61,7 +62,7 @@ Send, %commandschannel%
 Sleep, 350
 Send, {enter}
 OutputDebug, Opened on-duty-commands
-Sleep, 8000
+Sleep, 2000
 
 ; Delete all text in msg box
 
@@ -131,7 +132,6 @@ Loop,
     {
         Break
     }
-    
 }
 
 ; add GT to notes if needed
@@ -239,7 +239,7 @@ Send, %invitetracker%
 Sleep, 350
 Send, {enter}
 OutputDebug, Opened invite tracker
-Sleep, 8000
+Sleep, 2000
 Send, ^f
 Sleep, 150
 Send, ^a{Backspace}
@@ -267,7 +267,7 @@ Send, %sotofficial%
 Sleep, 350
 Send, {enter}
 OutputDebug, Opened sot official
-Sleep, 8000
+Sleep, 2000
 Send, ^f
 Sleep, 150
 Send, ^a{Backspace}
@@ -312,7 +312,7 @@ IfMsgBox, Yes
     Sleep, 350
     Send, {enter}
     OutputDebug, Opened ondutychat
-    Sleep, 8000
+    Sleep, 2000
     Send, a
     Sleep, 150
     Send, ^a{Backspace}
@@ -336,7 +336,7 @@ IfMsgBox, No
     Sleep, 350
     Send, {enter}
     OutputDebug, Opened ondutychat
-    Sleep, 8000
+    Sleep, 2000
     Send, a
     Sleep, 150
     Send, ^a{Backspace}

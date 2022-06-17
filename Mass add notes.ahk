@@ -8,7 +8,7 @@ MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 ; Versioning
 
 programName = Mass add notes
-programVersion = 1.5.0
+programVersion = 1.5.1
 fullProgramName = %programName% V%programVersion%
 
 ;variables 
@@ -20,7 +20,7 @@ OutputDebug, Variables Initialized
 
 ; User input for userID & note to add
 
-InputBox, userIDs, IDs if users to add notes to, Please enter the IDs of the users to add notes to seperated by a dot ex. 272001404086910977.863914391065853983, , , 150
+InputBox, userIDs, IDs if users to add notes to, Please enter the IDs of the users to add notes to seperated by a comma ex. 272001404086910977`,863914391065853983, , , 150
 InputBox, Note, Note to add, Please enter the note that should be added to the userIDs, , , 125
 
 OutputDebug, input received
@@ -39,13 +39,14 @@ Send, %commandschannel%
 Sleep, 300
 Send, {enter}
 OutputDebug, Opened on-duty-commands
-Sleep, 8000
+Sleep, 2000
 Send, a
 Sleep, 150
 Send, ^a{Backspace}
 
-Loop, parse, userIDs, `.
+Loop, parse, userIDs, `,
 {
+    WinActivate, ahk_exe Discord.exe
     OutputDebug, %A_LoopField%
     if A_LoopField is Integer
     {

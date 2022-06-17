@@ -8,18 +8,18 @@ MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 ; Versioning
 
 programName = Mass add warnings
-programVersion = 1.5.0
+programVersion = 1.5.1
 fullProgramName = %programName% V%programVersion%
 
 ;variables 
 
-commandschannel = {#}command-testing
+commandschannel = {#}on-duty-commands
 addwarn = warn
 OutputDebug, Variables Initialized
 
 ; User input for userID & note to add
 
-InputBox, userIDs, IDs if users to add warnings to, Please enter the IDs of the users to add warnings to seperated by a dot ex. 272001404086910977.863914391065853983, , , 160
+InputBox, userIDs, IDs if users to add warnings to, Please enter the IDs of the users to add warnings to seperated by a comma ex. 272001404086910977`,863914391065853983, , , 160
 InputBox, Reason, Reason to warn, Please enter the reason that should be added to the warning, , , 125
 
 OutputDebug, input received
@@ -38,12 +38,12 @@ Send, %commandschannel%
 Sleep, 300
 Send, {enter}
 OutputDebug, Opened on-duty-commands
-Sleep, 8000
+Sleep, 2000
 Send, a
 Sleep, 150
 Send, ^a{Backspace}
 
-Loop, parse, userIDs, `.
+Loop, parse, userIDs, `,
 {
     OutputDebug, %A_LoopField%
     if A_LoopField is Integer
