@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.5.1] - 2022-06-17
+### Added
+- Added extra warnings in staffcheck.exe
+- Added script compiling tutorial
+
+### Changed
+- Changed Mass add warnings to work with .csv file format
+- Changed Mass add notes to work with .csv file format
+- Changed change channel delay from 8 sec > 2 sec
+
+
 ## [1.5.0] - 2022-06-17
 ### Added
 - Added check for if staffcheck.ini doesn't exist
