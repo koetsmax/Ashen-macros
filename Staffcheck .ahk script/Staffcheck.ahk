@@ -9,7 +9,7 @@ MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 ; Versioning
 
 programName = Staffcheck
-programVersion = 1.4.0
+programVersion = 1.5.0
 fullProgramName = %programName% V%programVersion%
 
 ; Variables
@@ -22,7 +22,23 @@ info = info data
 lhist = loghistory full
 noteslist = notes list
 notesnew = notes new
+pagenumber = 1
 OutputDebug, Variables Initialized
+
+; Check if .ini file exists
+
+If !FileExist("staffcheck.ini")
+{
+    MsgBox, staffcheck.ini file not found. Creating file...
+    FileAppend, , staffcheck.ini
+    IniWrite, % "", staffcheck.ini, staffcheck, gtcbeforeid
+    IniWrite, Good to check -- GT:, staffcheck.ini, staffcheck, gtcafterid
+    IniWrite, % "", staffcheck.ini, staffcheck, gtcaftergt
+    IniWrite, % "", staffcheck.ini, staffcheck, notgtcbeforeid
+    IniWrite, **Not** Good to check -- GT:, staffcheck.ini, staffcheck, notgtcafterid
+    IniWrite, --, staffcheck.ini, staffcheck, notgtcaftergt
+    IniWrite, % "", staffcheck.ini, staffcheck, notgtcafterreason
+}
 
 ; User input of userID & GamerTag
 
@@ -30,12 +46,6 @@ InputBox, userID, UserID, Please enter the ID of the user to staffcheck, , , 125
 InputBox, xboxGT, Xbox Gamertag, Please enter the Xbox Gamertag of the user to Staffcheck, , , 125
 OutputDebug, input received
 Sleep, 1500
-
-; Formulate good to check message
-IniRead, goodtocheckmsg, staffcheck.ini , settings, goodtocheckmsg
-OutputDebug, Read goodtocheckmsg
-
-
 
 ; Activate Discord.exe and move to on-duty-commands
 
@@ -94,6 +104,35 @@ Send, %userID%
 Sleep, 300
 Send, {enter}{enter}
 OutputDebug, executed notes list
+
+; Multiple pages of notes?
+
+Loop,
+{
+    MsgBox, 4, Another page of notes?, Press YES if there is another page of notes.
+    IfMsgBox, Yes
+    {
+        WinActivate, ahk_exe Discord.exe
+        pagenumber++
+        Sleep, 150
+        Send, /%noteslist%
+        Sleep, 1600
+        Send, {enter}
+        Sleep, 500
+        Send, %userID%
+        Sleep, 300
+        Send, {Tab}{Tab}{Tab}
+        Sleep, 300
+        Send, %pagenumber%
+        Sleep, 300
+        Send, {enter}
+    }
+    IfMsgBox, No
+    {
+        Break
+    }
+    
+}
 
 ; add GT to notes if needed
 

@@ -1,0 +1,24 @@
+# Changelog
+
+## [1.5.0] - 2022-06-17
+### Added
+- Added check for if staffcheck.ini doesn't exist
+- Added support for multiple pages of notes
+
+### Changed
+- Delay fine tuning
+
+
+## [1.4.1] - 2022-06-17
+### Added
+- Changelog added
+- Customization for good to check messages
+- Customization.exe
+- staffcheck.ini
+
+### Changed
+- Changed delays between switching channels 10sec > 8sec
+- Changed delays in between commands to allow for discord to catch up
+
+### Removed
+- Gitignore file removed

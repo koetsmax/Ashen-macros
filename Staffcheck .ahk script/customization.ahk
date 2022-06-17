@@ -5,7 +5,7 @@ SetWorkingDir, %A_ScriptDir%
 ; Versioning
 
 programName = Customization
-programVersion = 1.0.0
+programVersion = 1.5.0
 fullProgramName = %programName% V%programVersion%
 
 ; Variables
@@ -13,6 +13,19 @@ fullProgramName = %programName% V%programVersion%
 userID = 272001404086910977
 xboxGT = M A X10815
 ondutychat = {#}on-duty-chat
+
+If !FileExist("staffcheck.ini")
+{
+    MsgBox, staffcheck.ini file not found. Creating file...
+    FileAppend, , staffcheck.ini
+    IniWrite, % "", staffcheck.ini, staffcheck, gtcbeforeid
+    IniWrite, Good to check -- GT:, staffcheck.ini, staffcheck, gtcafterid
+    IniWrite, % "", staffcheck.ini, staffcheck, gtcaftergt
+    IniWrite, % "", staffcheck.ini, staffcheck, notgtcbeforeid
+    IniWrite, **Not** Good to check -- GT:, staffcheck.ini, staffcheck, notgtcafterid
+    IniWrite, --, staffcheck.ini, staffcheck, notgtcaftergt
+    IniWrite, % "", staffcheck.ini, staffcheck, notgtcafterreason
+}
 
 ;GOOD TO CHECK RESET
 
