@@ -2,12 +2,6 @@
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
 
-; Versioning
-
-programName = Customization
-programVersion = 1.5.0
-fullProgramName = %programName% V%programVersion%
-
 ; Variables
 
 userID = 272001404086910977

@@ -5,12 +5,6 @@ SetWorkingDir, %A_ScriptDir%
 
 MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 
-; Versioning
-
-programName = Mass add warnings
-programVersion = 1.5.1
-fullProgramName = %programName% V%programVersion%
-
 ;variables 
 
 commandschannel = {#}on-duty-commands
