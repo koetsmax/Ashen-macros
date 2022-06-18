@@ -26,6 +26,9 @@
 - Delay fine tuning
 - Fixed mass add notes to point to correct channel
 
+## Removed
+- readme.txt
+
 ## [1.4.1] - 2022-06-17
 ### Added
 - Changelog added
