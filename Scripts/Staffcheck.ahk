@@ -5,12 +5,6 @@ SetWorkingDir, %A_ScriptDir%
 
 MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 
-; Versioning
-
-programName = Staffcheck
-programVersion = 1.5.1
-fullProgramName = %programName% V%programVersion%
-
 ; Variables
 
 ondutychat = {#}on-duty-chat
@@ -26,17 +20,17 @@ OutputDebug, Variables Initialized
 
 ; Check if .ini file exists
 
-If !FileExist("staffcheck.ini")
+If !FileExist("settings.ini")
 {
-    MsgBox, staffcheck.ini file not found. Creating file...
-    FileAppend, , staffcheck.ini
-    IniWrite, % "", staffcheck.ini, staffcheck, gtcbeforeid
-    IniWrite, Good to check -- GT:, staffcheck.ini, staffcheck, gtcafterid
-    IniWrite, % "", staffcheck.ini, staffcheck, gtcaftergt
-    IniWrite, % "", staffcheck.ini, staffcheck, notgtcbeforeid
-    IniWrite, **Not** Good to check -- GT:, staffcheck.ini, staffcheck, notgtcafterid
-    IniWrite, --, staffcheck.ini, staffcheck, notgtcaftergt
-    IniWrite, % "", staffcheck.ini, staffcheck, notgtcafterreason
+    MsgBox, settings.ini file not found. Creating file...
+    FileAppend, , settings.ini
+    IniWrite, % "", settings.ini, staffcheck, gtcbeforeid
+    IniWrite, Good to check -- GT:, settings.ini, staffcheck, gtcafterid
+    IniWrite, % "", settings.ini, staffcheck, gtcaftergt
+    IniWrite, % "", settings.ini, staffcheck, notgtcbeforeid
+    IniWrite, **Not** Good to check -- GT:, settings.ini, staffcheck, notgtcafterid
+    IniWrite, --, settings.ini, staffcheck, notgtcaftergt
+    IniWrite, % "", settings.ini, staffcheck, notgtcafterreason
 }
 
 ; User input of userID & GamerTag
@@ -301,9 +295,9 @@ Sleep, 100
 MsgBox, 4, Good to check?, Is this person good to check
 IfMsgBox, Yes
 {
-    IniRead, gtcbeforeid, staffcheck.ini , staffcheck, gtcbeforeid
-    IniRead, gtcafterid, staffcheck.ini , staffcheck, gtcafterid
-    IniRead, gtcaftergt, staffcheck.ini , staffcheck, gtcaftergt
+    IniRead, gtcbeforeid, settings.ini , staffcheck, gtcbeforeid
+    IniRead, gtcafterid, settings.ini , staffcheck, gtcafterid
+    IniRead, gtcaftergt, settings.ini , staffcheck, gtcaftergt
     OutputDebug, Read good to check message
     Sleep, 150
     Send, ^k
@@ -324,10 +318,10 @@ IfMsgBox, Yes
 }
 IfMsgBox, No
 {
-    IniRead, notnotgtcbeforeid, staffcheck.ini , staffcheck, notgtcbeforeid
-    IniRead, notgtcafterid, staffcheck.ini , staffcheck, notgtcafterid
-    IniRead, notgtcaftergt, staffcheck.ini , staffcheck, notgtcaftergt
-    IniRead, notgtcafterreason, staffcheck.ini , staffcheck, notgtcafterreason
+    IniRead, notnotgtcbeforeid, settings.ini , staffcheck, notgtcbeforeid
+    IniRead, notgtcafterid, settings.ini , staffcheck, notgtcafterid
+    IniRead, notgtcaftergt, settings.ini , staffcheck, notgtcaftergt
+    IniRead, notgtcafterreason, settings.ini , staffcheck, notgtcafterreason
 
     InputBox, Reason, Reason, Please enter the Reason that the user is not good to check, , , 125
     Send, ^k

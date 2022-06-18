@@ -1,9 +1,0 @@
-1. Install AutoHotKey at https://www.autohotkey.com/download/ahk-install.exe
-
-2. Open the setup and install the program
-
-3. To compile a script, Right click it and press Compile Script
-
-4. Your .exe will appear!
-
-5. If you are too lazy to do this or would rather not install AutoHotkey, contact Max
