@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.6.0] - 2022-06-18
+
+### Added
+- Compiler for my ease of use
+
+### Changed
+- Changed file structure again
+
+
 ## [1.5.1] - 2022-06-17
 ### Added
 - Added extra warnings in staffcheck.exe
