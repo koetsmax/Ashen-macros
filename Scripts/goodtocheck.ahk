@@ -2,7 +2,6 @@
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
 
-
 MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 
 ; Variables
