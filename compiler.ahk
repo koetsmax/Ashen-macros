@@ -9,4 +9,4 @@ Run, "C:\Program Files\AutoHotkey\Compiler\Ahk2Exe" /in "Scripts\goodtocheck.ahk
 Run, "C:\Program Files\AutoHotkey\Compiler\Ahk2Exe" /in "Scripts\mass add notes.ahk" /out Executables\mass_add_notes_%version%.exe
 Run, "C:\Program Files\AutoHotkey\Compiler\Ahk2Exe" /in "Scripts\mass add warnings.ahk" /out Executables\mass_add_warnings_%version%.exe
 Run, "C:\Program Files\AutoHotkey\Compiler\Ahk2Exe" /in "Scripts\staffcheck.ahk" /out Executables\staffcheck_%version%.exe"
-FileCopy, Scripts\staffcheck.ini, Executables\
+FileCopy, Scripts\settings.ini, Executables\
