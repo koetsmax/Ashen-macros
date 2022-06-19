@@ -66,7 +66,7 @@ Loop, parse, userIDs, `,
             Sleep, 500
             Send, {enter}
             Sleep, 500
-            Send{Raw}%Note%
+            Send {Raw}%Note%
             Sleep, 300
             Send, {enter}{enter}
         }

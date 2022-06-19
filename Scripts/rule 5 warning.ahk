@@ -34,6 +34,8 @@ Send, a
 Sleep, 150
 Send, ^a{Backspace}
 
+MsgBox, Test
+
 if userID is Integer
 {
     Sleep, 150
@@ -45,7 +47,7 @@ if userID is Integer
     Sleep, 300
     Send, {Right}{Down}{Tab}
     Sleep, 300
-    Send{Raw}Rule #5: You must give a warning before leaving a ship by using !leave 10 minutes before you plan to leave the ship. Leaving significantly before or after the 10 minutes is not acceptable.
+    Send {Raw}Rule #5: You must give a warning before leaving a ship by using !leave 10 minutes before you plan to leave the ship. Leaving significantly before or after the 10 minutes is not acceptable.
     Sleep, 1200
     Send, {enter}
     OutputDebug, Added warning
