@@ -1,5 +1,10 @@
 # Changelog
 
+## Upcoming changes
+- AoA ban list adder
+- Macro for all warnings
+
+
 ## [1.7.0] - 2022-06-18
 
 ### Added
