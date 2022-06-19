@@ -8,6 +8,7 @@
 ### Changed
 - Changed mass add warnings/notes to patch it sometimes opening snipping tool!?
 - Fixed add notes/warnings not adding special characters like # to reasons
+- Fixed some grammar errors
 
 ## [1.6.0] - 2022-06-18
 ### Changed
