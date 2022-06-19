@@ -13,7 +13,7 @@ OutputDebug, Variables Initialized
 
 ; User input for userID & note to add
 
-InputBox, userIDs, IDs if users to add warnings to, Please enter the IDs of the users to add warnings to seperated by a comma ex. 272001404086910977`,863914391065853983, , , 160
+InputBox, userIDs, IDs of users to add warnings to, Please enter the IDs of the users to add warnings to seperated by a comma ex. 272001404086910977`,863914391065853983, , , 160
 InputBox, Reason, Reason to warn, Please enter the reason that should be added to the warning, , , 125
 
 OutputDebug, input received
@@ -39,6 +39,7 @@ Send, ^a{Backspace}
 
 Loop, parse, userIDs, `,
 {
+    WinActivate, ahk_exe Discord.exe
     OutputDebug, %A_LoopField%
     if A_LoopField is Integer
     {
@@ -49,9 +50,9 @@ Loop, parse, userIDs, `,
         Sleep, 500
         Send, %A_LoopField%
         Sleep, 300
-        Send, {Tab}{Tab}{Tab}
+        Send, {Right}{Down}{Tab}
         Sleep, 300
-        Send, %Reason%
+        Send {Raw}%Reason%
         Sleep, 1200
         Send, {enter}
         OutputDebug, Added warning

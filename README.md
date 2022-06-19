@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.7.0] - 2022-06-18
+
+### Added
+- Rule 5 warning macro 
+
+### Changed
+- Changed mass add warnings/notes to patch it sometimes opening snipping tool!?
+- Fixed add notes/warnings not adding special characters like # to reasons
+
 ## [1.6.0] - 2022-06-18
 ### Changed
 - Changed file structure again

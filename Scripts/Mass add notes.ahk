@@ -14,7 +14,7 @@ OutputDebug, Variables Initialized
 
 ; User input for userID & note to add
 
-InputBox, userIDs, IDs if users to add notes to, Please enter the IDs of the users to add notes to seperated by a comma ex. 272001404086910977`,863914391065853983, , , 150
+InputBox, userIDs, IDs of users to add notes to, Please enter the IDs of the users to add notes to seperated by a comma ex. 272001404086910977`,863914391065853983, , , 150
 InputBox, Note, Note to add, Please enter the note that should be added to the userIDs, , , 125
 
 OutputDebug, input received
@@ -66,7 +66,7 @@ Loop, parse, userIDs, `,
             Sleep, 500
             Send, {enter}
             Sleep, 500
-            Send, %Note%
+            Send{Raw}%Note%
             Sleep, 300
             Send, {enter}{enter}
         }
