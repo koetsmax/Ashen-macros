@@ -4,6 +4,8 @@ SetWorkingDir, %A_ScriptDir%
 
 MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
 
+MsgBox, Test
+
 ;variables 
 
 commandschannel = {#}on-duty-commands
@@ -33,8 +35,6 @@ Sleep, 2000
 Send, a
 Sleep, 150
 Send, ^a{Backspace}
-
-MsgBox, Test
 
 if userID is Integer
 {
