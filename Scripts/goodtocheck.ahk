@@ -2,7 +2,7 @@
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
 
-MsgBox, 4, In case of booboo, Press Windows x in case of big explosion
+MsgBox, 0, In case of unexpected behaviour, Press Windows+X if the program shows unexpected behaviour like opening up different programs
 
 ; Variables
 

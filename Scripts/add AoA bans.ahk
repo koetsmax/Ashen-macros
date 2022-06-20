@@ -2,6 +2,8 @@
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
 
+MsgBox, 0, In case of unexpected behaviour, Press Windows+X if the program shows unexpected behaviour like opening up different programs
+
 ; Variables
 
 url := "https://docs.google.com/spreadsheets/d/1V5Z61CKmJoNZn7L3PWziJdbHRVzYuxaZU4qTOIRHfWg/edit#gid=125271616"
