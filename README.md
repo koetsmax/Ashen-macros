@@ -1,19 +1,16 @@
 # Changelog
 
-## Upcoming changes
-- AoA ban list adder
-- Macro for all warnings
-
-
-## [1.7.0] - 2022-06-18
+## [1.7.0] - 2022-06-20
 
 ### Added
-- Rule 5 warning macro 
+- Rule 5 warning macro
+- add AoA bans macro
 
 ### Changed
 - Changed mass add warnings/notes to patch it sometimes opening snipping tool!?
 - Fixed add notes/warnings not adding special characters like # to reasons
 - Fixed some grammar errors
+- Changed warning message to be more detailed
 
 ## [1.6.0] - 2022-06-18
 ### Changed

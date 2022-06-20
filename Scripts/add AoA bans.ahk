@@ -16,7 +16,7 @@ IfMsgBox, Yes
 } Else IfMsgBox, No
 {
     inputBox, usertag, Usertag of FoF ban, Please enter the user#tag from the FoF ban. ex Max#0001, , ,125
-    inputBox, userGT, Usergt of FoF ban, Please enter the user's gamertag from the FoF ban, , ,125
+    inputBox, gamertag, Usergt of FoF ban, Please enter the user's gamertag from the FoF ban, , ,125
     inputBox, userID, UserID of FoF ban, Please enter the userID from the FoF ban, , ,125
     inputBox, reason, reason of FoF ban, Please enter the reason from the FoF ban, , ,125
 }
@@ -45,7 +45,7 @@ FileAppend,
 cmdToRun := "cmd /c " . outputFile
 run, %cmdToRun%
 
-sleep,5000
+Sleep, 8000
 
 ; remove temporary file
 if (FileExist(outputFile))
@@ -53,6 +53,8 @@ if (FileExist(outputFile))
 
 Sleep, 1500
 Send, {CtrlDown}{Down}{CtrlUp}{Down}
+
+; Requiem ban
 
 IfMsgBox, Yes
 {
@@ -70,7 +72,7 @@ IfMsgBox, Yes
                     ban = N/A
                     Send, {Right}
                     Sleep, 100
-                    Send, %ban%
+                    Send, {Raw}%ban%
                     Sleep, 175
                 } else {
                     gamertag := SubStr(ban, 4)
@@ -78,7 +80,7 @@ IfMsgBox, Yes
                     OutputDebug, %gamertag%
                     Send, {Right}
                     Sleep, 100
-                    Send, %gamertag%
+                    Send, {Raw}%gamertag%
                     Sleep, 175
                 }
             } else if (loopCount == 2){
@@ -148,12 +150,65 @@ IfMsgBox, Yes
         }
     }
     
-} else IfMsgBox, No
+} 
+IfMsgBox, No
 {
-    tell 
+    if usertag Contains ???
+    {
+        usertag = N/A
+        Sleep, 100
+        Send, {Raw}%usertag%
+        Sleep, 175
+    } else {
+        Sleep, 100
+        Send, {Raw}%usertag%
+        Sleep, 175
+    }
+    if gamertag contains ???
+    {
+        gamertag = N/A
+        Send, {Right}
+        Sleep, 100
+        Send, {Raw}%gamertag%
+        Sleep, 175
+    } else {
+        Send, {Right}
+        Sleep, 100
+        Send, {Raw}%gamertag%
+        Sleep, 175
+    }
+    if userID contains ???
+    {
+        userID = N/A
+        Send, {Right}
+        Sleep, 100
+        Send, {Raw}%userID%
+        Sleep, 175
+    } else {
+        Send, {Right}
+        Sleep, 100
+        Send, {Raw}%userID%
+        Sleep, 175
+    }
+    Send, {Right}
+    Sleep, 100
+    Send, Fortune
+    Sleep, 100
+    Send, {right}
+    if reason contains ???
+    {
+        reason = N/A
+        Send, {Right}
+        Sleep, 100
+        Send, {Raw}%reason%
+        Sleep, 175
+    } else {
+        Send, {Right}
+        Sleep, 100
+        Send, {Raw}%reason%
+        Sleep, 175
+    }
 }
-
-
 
 ExitApp
 Return
