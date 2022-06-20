@@ -4,8 +4,8 @@ SetWorkingDir, %A_ScriptDir%
 
 ; Variables
 
-
 url := "https://docs.google.com/spreadsheets/d/1V5Z61CKmJoNZn7L3PWziJdbHRVzYuxaZU4qTOIRHfWg/edit#gid=125271616"
+loopCount = 0
 
 MsgBox, 4, Requiem ban?, Press YES if this ban is from Requiem.
 IfMsgBox, Yes
@@ -54,11 +54,104 @@ Send, {CtrlDown}{Down}{CtrlUp}{Down}
 
 IfMsgBox, Yes
 {
-    MsgBox, test
+    Loop, parse, reqban, -
+    {
+        {
+            Sleep, 150
+            ban := Trim(A_LoopField)
+            OutputDebug, %ban%
+            loopCount++
+            OutputDebug, Current loopcount = %loopCount%
+            if (loopCount == 1){
+                if A_LoopField Contains ???
+                {
+                    ban = N/A
+                    Send, {Right}
+                    Sleep, 100
+                    Send, %ban%
+                    Sleep, 175
+                } else {
+                    gamertag := SubStr(ban, 4)
+                    gamertag := Trim(gamertag)
+                    OutputDebug, %gamertag%
+                    Send, {Right}
+                    Sleep, 100
+                    Send, %gamertag%
+                    Sleep, 175
+                }
+            } else if (loopCount == 2){
+                if A_LoopField Contains	???
+                {
+                    ban = N/A
+                    Send, {Right}
+                    Sleep, 100
+                    Send, {Raw}%ban%
+                    Sleep, 175
+                } else {
+                    Send, {Right}
+                    Sleep, 100
+                    Send, {Raw}%ban%
+                    Sleep, 175
+                }
+            } else if (loopCount == 3){
+                if A_LoopField Contains ???
+                {
+                    ban = N/A
+                    Send, {Left}
+                    Sleep, 100
+                    Send, {Left}
+                    Sleep, 100
+                    Send, {Raw}%ban%
+                    Sleep, 175
+                    Send, {Right}
+                    Sleep, 150
+                    Send, {Right}
+                    Sleep, 150
+                    Send, {Right}
+                    Sleep, 150
+                    Send, Requiem
+                    Sleep, 125
+                } else {
+                    Send, {Left}
+                    Sleep, 100
+                    Send, {Left}
+                    Sleep, 100
+                    Send, {Raw}%ban%
+                    Sleep, 175
+                    Send, {Right}
+                    Sleep, 150
+                    Send, {Right}
+                    Sleep, 150
+                    Send, {Right}
+                    Sleep, 150
+                    Send, Requiem
+                    Sleep, 125
+                }
+            } else if (loopCount == 4){
+                if A_LoopField Contains ???
+                {
+                    ban = N/A
+                    Send, {Right}
+                    Sleep, 100
+                    Send, {Raw}%ban%
+                    Sleep, 250
+                } else {
+                    Send, {Right}
+                    Sleep, 100
+                    Send, {Raw}%ban%
+                    Sleep, 250           
+                }
+
+            }
+        }
+    }
+    
 } else IfMsgBox, No
 {
-    MsgBox, Test
+    tell 
 }
+
+
 
 ExitApp
 Return

@@ -39,7 +39,6 @@ InputBox, userID, UserID, Please enter the ID of the user to staffcheck, , , 125
 InputBox, xboxGT, Xbox Gamertag, Please enter the Xbox Gamertag of the user to Staffcheck, , , 125
 OutputDebug, input received
 MsgBox, 0, , DO NOT TOUCH YOUR MOUSE OR KEYBOARD WHEN THIS SCRIPT IS RUNNING. ONLY TOUCH YOUR MOUSE AND OR KEYBOARD WHEN ONE OF THESE BOXES HAVE POPPED UP. The script will now start
-MsgBox, 0, , There is a 2 second delay in between switching channels. So be wary of that
 Sleep, 1500
 
 ; Activate Discord.exe and move to on-duty-commands
@@ -335,7 +334,7 @@ IfMsgBox, No
     Sleep, 150
     Send, ^a{Backspace}
     Sleep, 100
-    Send, %notgtcbeforeid% <@%userID%> %notgtcafterid% %xboxGT% %notgtcaftergt% %Reason% %notgtcafterreason%
+    Send,{Raw} %notgtcbeforeid% <@%userID%> %notgtcafterid% %xboxGT% %notgtcaftergt% %Reason% %notgtcafterreason%
     Sleep, 3500
     Send, {enter}
     OutputDebug, Not good to check message sent
