@@ -51,7 +51,7 @@ Sleep, 8000
 if (FileExist(outputFile))
     FileDelete, %outputFile%
 
-Sleep, 1500
+Sleep, 3000
 Send, {CtrlDown}{Down}{CtrlUp}{Down}
 
 ; Requiem ban

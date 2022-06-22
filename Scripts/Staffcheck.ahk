@@ -291,7 +291,7 @@ Send, ^a{Backspace}
 Sleep, 100
 Send, {Escape}
 Sleep, 100
-MsgBox, 4, Good to check?, Is this person good to check
+MsgBox, 3, Good to check?, Is this person good to check? Press no to cancel if you have to look into this person more.
 IfMsgBox, Yes
 {
     IniRead, gtcbeforeid, settings.ini , staffcheck, gtcbeforeid
