@@ -310,8 +310,16 @@ IfMsgBox, Yes
     Sleep, 150
     Send, ^a{Backspace}
     Sleep, 100
-    Send, %gtcbeforeid% <@%userID%> %gtcafterid% %xboxGT% %gtcaftergt%
-    Sleep, 3500
+    Send,{Raw} %gtcbeforeid%{Space}
+    Sleep, 100
+    Send,{Raw} <@%userID%>{Space}
+    Sleep, 100
+    Send,{Raw} %gtcafterid%{Space}
+    Sleep, 100
+    Send,{Raw} %xboxGT%{Space}
+    Sleep, 100
+    Send,{Raw} %gtcaftergt%
+    Sleep, 100
     Send, {enter}
     OutputDebug, Good to check message sent
 }
@@ -334,7 +342,19 @@ IfMsgBox, No
     Sleep, 150
     Send, ^a{Backspace}
     Sleep, 100
-    Send,{Raw} %notgtcbeforeid% <@%userID%> %notgtcafterid% %xboxGT% %notgtcaftergt% %Reason% %notgtcafterreason%
+    Send,{Raw} %notgtcbeforeid%{Space}
+    Sleep, 100
+    Send,{Raw} <@%userID%>{Space}
+    Sleep, 100
+    Send,{Raw} %notgtcafterid%{Space}
+    Sleep, 100
+    Send,{Raw} %xboxGT%{Space}
+    Sleep, 100
+    Send,{Raw} %notgtcaftergt%{Space}
+    Sleep, 100
+    Send,{Raw} %Reason%{Space}
+    Sleep, 100
+    Send,{Raw} %notgtcafterreason% 
     Sleep, 3500
     Send, {enter}
     OutputDebug, Not good to check message sent
