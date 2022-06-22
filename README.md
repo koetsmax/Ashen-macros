@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.7.1] - 2022-06-22
+
+### Changed
+- Hopefully fixed the issues steph is having for the last time
+
 ## [1.7.0] - 2022-06-20
 
 ### Added
