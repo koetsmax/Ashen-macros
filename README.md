@@ -4,6 +4,8 @@
 
 ### Changed
 - Hopefully fixed the issues steph is having for the last time
+- add aoa bans script fixed so it should actually work (more often)
+- good to check message box in staffcheck script now has a cancel option
 
 ## [1.7.0] - 2022-06-20
 
