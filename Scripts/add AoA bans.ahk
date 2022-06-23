@@ -12,7 +12,7 @@ loopCount = 0
 MsgBox, 4, Requiem ban?, Press YES if this ban is from Requiem.
 IfMsgBox, Yes
 {
-    InputBox, reqban, ban message, Please enter the full ban message from AoA, , , 125
+    InputBox, reqban, ban message, Please enter the entire entry as written in AoA, , , 125
 } Else IfMsgBox, No
 {
     inputBox, usertag, Usertag of FoF ban, Please enter the user#tag from the FoF ban. ex Max#0001, , ,125

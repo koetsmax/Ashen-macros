@@ -2,11 +2,19 @@
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
 
-
 MsgBox, 0, In case of unexpected behaviour, Press Windows+X if the program shows unexpected behaviour like opening up different programs
+
+start:
 
 ; Variables
 
+tutorial = 
+(
+The input tab is to enter the ID and gamertag of the user you want to check.
+In the options tab you can select what you want to check. (default is all)
+
+After you have set everything up press Continue and the script will run.
+)
 ondutychat = {#}on-duty-chat
 commandschannel = {#}on-duty-commands
 invitetracker = {#}invite-tracker
@@ -33,21 +41,77 @@ If !FileExist("settings.ini")
     IniWrite, % "", settings.ini, staffcheck, notgtcafterreason
 }
 
-; User input of userID & GamerTag
+; Gui with input and options
 
-InputBox, userID, UserID, Please enter the ID of the user to staffcheck, , , 125
-InputBox, xboxGT, Xbox Gamertag, Please enter the Xbox Gamertag of the user to Staffcheck, , , 125
-OutputDebug, input received
+Gui, Add, Tab3,, Input|Options|How to use
+
+Gui, Add, Text,, Discord ID:
+Gui, Add, Text,, xbox Gamertag:
+Gui, Add, Edit, vuserID ym x100 y31
+Gui, Add, Edit, vxboxGT
+
+Gui, Tab, 2
+Gui, Add, Radio, vall Checked, Entire staffcheck
+Gui, Add, Radio, velemental, Elemental commands
+Gui, Add, Radio, vashen, Ashen commands
+Gui, Add, Radio, vinvites, Check Invite tracker
+Gui, Add, Radio, vsot, Check Sot official
+Gui, Add, Radio, vgoodtocheck, Good to check
+
+Gui, Tab, 3
+Gui, Add, Text,, %tutorial%
+Gui, Tab
+Gui, Add, Button, x10, Continue
+Gui, show, w400 h185
+OutputDebug, Opened GUI
+
+Return
+ButtonContinue:
+Gui, Submit
+
+if userID is not integer
+{
+    OutputDebug, %userID%
+    Gui, Destroy
+    MsgBox, Error, Userid: %userID% is invalid. UserID MUST only consist of numbers
+    Goto start
+}
+
 MsgBox, 0, , DO NOT TOUCH YOUR MOUSE OR KEYBOARD WHEN THIS SCRIPT IS RUNNING. ONLY TOUCH YOUR MOUSE AND OR KEYBOARD WHEN ONE OF THESE BOXES HAVE POPPED UP. The script will now start
 Sleep, 1500
-
-; Activate Discord.exe and move to on-duty-commands
 
 WinActivate, ahk_exe Discord.exe
 OutputDebug, entered discord
 Send, {Escape}
 Sleep, 120
 Send, {Escape}
+
+; Go to sub-routine
+Gui, Destroy
+if (all == 1)
+    Goto all
+else if (elemental == 1)
+    Goto elemental
+else if (ashen == 1)
+    Goto ashen
+else if (invites == 1)
+    Goto invites
+else if (sot == 1)
+    Goto sotofficial
+else if (goodtocheck == 1)
+    Goto goodtocheck
+else
+{
+    MsgBox, An error has ocured, please try again
+    Goto start
+}
+Return
+all:
+
+elemental:
+
+; Move to on duty commands
+
 Sleep, 120
 Send, ^k
 Sleep, 120
@@ -57,7 +121,7 @@ Send, {enter}
 OutputDebug, Opened on-duty-commands
 Sleep, 2000
 
-; Delete all text in msg box
+; delete all text in message box
 
 Send, a
 Sleep, 150
@@ -128,7 +192,6 @@ Loop,
 }
 
 ; add GT to notes if needed
-
 
 Sleep, 2500
 PixelGetColor, RGBcolour, 963, 1791, RGB
@@ -210,7 +273,32 @@ if (RGBcolour == 0x49443C) {
 
 MsgBox, 0, Elemental commands, Press OK once you have looked through the Elemental commands
 
-; Ashen commands
+; Check if radio = all
+
+if (all != 1){
+    Goto, start
+}
+
+ashen:
+
+; Go to on-duty-commands
+if (all != 1){
+    Sleep, 120
+    Send, ^k
+    Sleep, 120
+    Send, %commandschannel%
+    Sleep, 350
+    Send, {enter}
+    OutputDebug, Opened on-duty-commands
+    Sleep, 2000
+}
+; Delete all text in msg box
+
+Send, a
+Sleep, 150
+Send, ^a{Backspace}
+
+; Check ashen commands
 
 WinActivate, ahk_exe Discord.exe
 OutputDebug, entered discord
@@ -221,6 +309,14 @@ Send, {!}xsearch %xboxGT%{enter}
 Sleep, 250
 OutputDebug, !search and !xsearch done
 MsgBox, 0, Ashen commands, Press OK once you have looked through the Ashen commands
+
+; Check if radio = all
+
+if (all != 1){
+    Goto, start
+}
+
+invites:
 
 ; Invite Tracker
 
@@ -246,6 +342,13 @@ Send, {enter}
 OutputDebug, Searched invite tracker
 MsgBox, 0, Invite Tracker, Press OK once you have looked through the invite tracker
 
+; Check if radio = all
+
+if (all != 1){
+    Goto, start
+}
+
+sotofficial:
 
 ; Check sot official posts
 
@@ -283,15 +386,27 @@ IfMsgBox, Yes
     MsgBox, 0, Sot Official, Press OK Once you have looked through their messages in Sot Official
 }
 
+; Check if radio = all
+
+if (all != 1){
+    Goto, start
+}
+
+goodtocheck:
 
 ; Staffcheck complete
+
 WinActivate, ahk_exe Discord.exe
 Sleep, 250
 Send, ^a{Backspace}
 Sleep, 100
 Send, {Escape}
 Sleep, 100
+<<<<<<< Updated upstream
 MsgBox, 4, Good to check?, Is this person good to check
+=======
+MsgBox, 3, Good to check?, Is this person good to check? Press cancel to cancel if you have to look into this person more.
+>>>>>>> Stashed changes
 IfMsgBox, Yes
 {
     IniRead, gtcbeforeid, settings.ini , staffcheck, gtcbeforeid
@@ -340,7 +455,10 @@ IfMsgBox, No
     OutputDebug, Not good to check message sent
 }
 
-OutputDebug, Script finished
+
+Goto, start
+GuiClose:
+GuiEscape:
 ExitApp
 Return
 #x::ExitApp
