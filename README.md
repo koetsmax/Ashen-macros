@@ -1,7 +1,5 @@
 # Changelog
 
-<<<<<<< HEAD
-=======
 ## [1.8.0] - 2022-06
 
 ### Added
@@ -14,7 +12,6 @@
 - Removed good to check.ahk because it is embedded in staffcheck.ahk now
 
 
->>>>>>> testing
 ## [1.7.1] - 2022-06-22
 
 ### Changed
@@ -22,10 +19,6 @@
 - add aoa bans script fixed so it should actually work (more often)
 - good to check message box in staffcheck script now has a cancel option
 
-<<<<<<< HEAD
-=======
-
->>>>>>> testing
 ## [1.7.0] - 2022-06-20
 
 ### Added
