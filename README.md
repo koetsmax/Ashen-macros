@@ -1,5 +1,20 @@
 # Changelog
 
+<<<<<<< HEAD
+=======
+## [1.8.0] - 2022-06
+
+### Added
+- Added GUI to staffchecking script so you can seperate the entire process if you want to
+- Added how to use for staffchecking script
+- Added how to use for add to ban list
+- Added GUI for add to ban list script
+
+### Removed
+- Removed good to check.ahk because it is embedded in staffcheck.ahk now
+
+
+>>>>>>> testing
 ## [1.7.1] - 2022-06-22
 
 ### Changed
@@ -7,6 +22,10 @@
 - add aoa bans script fixed so it should actually work (more often)
 - good to check message box in staffcheck script now has a cancel option
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> testing
 ## [1.7.0] - 2022-06-20
 
 ### Added
@@ -19,11 +38,15 @@
 - Fixed some grammar errors
 - Changed warning message to be more detailed
 
+
 ## [1.6.0] - 2022-06-18
+
 ### Changed
 - Changed file structure again
 
+
 ## [1.5.1] - 2022-06-17
+
 ### Added
 - Added extra warnings in staffcheck.exe
 - Added script compiling tutorial
@@ -35,6 +58,7 @@
 
 
 ## [1.5.0] - 2022-06-17
+
 ### Added
 - Added check for if staffcheck.ini doesn't exist
 - Added support for multiple pages of notes
@@ -48,7 +72,9 @@
 ## Removed
 - readme.txt
 
+
 ## [1.4.1] - 2022-06-17
+
 ### Added
 - Changelog added
 - Customization for good to check messages
