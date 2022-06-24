@@ -2,8 +2,16 @@
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
 
-MsgBox, 0, In case of unexpected behaviour, Press Windows+X if the program shows unexpected behaviour like opening up different programs
+warning =
+(
+Ranged and Melee Weapon Hit Detection
+In areas of intense action, players may find themselves firing shots or landing strikes that do not cause damage to their targets.
+While small improvements continue to be delivered during our regular updates, we are continuing to investigate and identify further improvements to the player combat experience.
 
+AKA. Press Windows+X to force quit the program
+)
+
+MsgBox, %warning%
 start:
 
 ; Variables
@@ -43,22 +51,20 @@ If !FileExist("settings.ini")
 
 ; Gui with input and options
 
-Gui, Add, Tab3,, Input|Options|How to use
+Gui, Add, Tab3,, Input|How to use
 
 Gui, Add, Text,, Discord ID:
 Gui, Add, Text,, xbox Gamertag:
 Gui, Add, Edit, vuserID ym x100 y31
 Gui, Add, Edit, vxboxGT
-
-Gui, Tab, 2
-Gui, Add, Radio, vall Checked, Entire staffcheck
+Gui, Add, Radio, vall Checked x225 y34, Entire staffcheck
 Gui, Add, Radio, velemental, Elemental commands
 Gui, Add, Radio, vashen, Ashen commands
 Gui, Add, Radio, vinvites, Check Invite tracker
 Gui, Add, Radio, vsot, Check Sot official
 Gui, Add, Radio, vgoodtocheck, Good to check
 
-Gui, Tab, 3
+Gui, Tab, 2
 Gui, Add, Text,, %tutorial%
 Gui, Tab
 Gui, Add, Button, x10, Continue
@@ -133,7 +139,7 @@ Sleep, 800
 Send, /%info%
 Sleep, 1600
 Send, {enter}user{enter}
-Sleep, 500
+Sleep, 600
 Send, %userID%
 Sleep, 300
 Send, {enter}{enter}
@@ -145,7 +151,7 @@ Sleep, 150
 Send, /%lhist%
 Sleep, 1600
 Send, {enter}
-Sleep, 500
+Sleep, 600
 Send, %userID%
 Sleep, 300
 Send, {enter}{enter}
@@ -157,11 +163,16 @@ Sleep, 150
 Send, /%noteslist%
 Sleep, 1600
 Send, {enter}
-Sleep, 500
+Sleep, 600
 Send, %userID%
 Sleep, 300
 Send, {enter}{enter}
 OutputDebug, executed notes list
+Sleep, 2500
+
+; get RGB value of specific Pixel
+
+PixelGetColor, RGBcolour, 963, 1791, RGB
 
 ; Multiple pages of notes?
 
@@ -194,7 +205,6 @@ Loop,
 ; add GT to notes if needed
 
 Sleep, 2500
-PixelGetColor, RGBcolour, 963, 1791, RGB
 OutputDebug, %RGBcolour%
 if (RGBcolour == 0x49443C) {
     OutputDebug, Adding GT to notes
@@ -402,11 +412,7 @@ Send, ^a{Backspace}
 Sleep, 100
 Send, {Escape}
 Sleep, 100
-<<<<<<< Updated upstream
-MsgBox, 4, Good to check?, Is this person good to check
-=======
 MsgBox, 3, Good to check?, Is this person good to check? Press cancel to cancel if you have to look into this person more.
->>>>>>> Stashed changes
 IfMsgBox, Yes
 {
     IniRead, gtcbeforeid, settings.ini , staffcheck, gtcbeforeid

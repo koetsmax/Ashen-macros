@@ -1,7 +1,5 @@
 # Changelog
 
-<<<<<<< Updated upstream
-=======
 ## [1.8.0] - 2022-06
 
 ### Added
@@ -15,7 +13,6 @@
 - add aoa bans script fixed so it should actually work (more often)
 - good to check message box in staffcheck script now has a cancel option
 
->>>>>>> Stashed changes
 ## [1.7.0] - 2022-06-20
 
 ### Added

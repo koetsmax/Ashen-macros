@@ -21,6 +21,7 @@ count = 0
 reqcount = 0
 fofcount = 0
 loopCount = 0
+banlist = {#}command-testing
 
 ; Gui with input and options
 
@@ -218,6 +219,42 @@ Sleep, 300
 Send, {Right}
 Sleep, 200
 Send, {Raw}%name%
+Sleep, 300
+OutputDebug, Added ban to ban list
+
+; Add ban to AoA
+
+Clipboard := A_Tab
+
+WinActivate, ahk_exe Discord.exe
+OutputDebug, entered discord
+Send, {Escape}
+Sleep, 120
+Send, {Escape}
+
+Sleep, 120
+Send, ^k
+Sleep, 120
+Send, %banlist%
+Sleep, 350
+Send, {enter}
+OutputDebug, Opened banlist
+Sleep, 2000
+
+Send, {Raw}%discordname%
+Sleep, 300
+Send, ^v
+Send, {Raw}%xboxGT%
+Sleep, 300
+Send, ^v
+Send, {Raw}%userID%
+Sleep, 300
+Send, ^v
+Send, {Raw}%reason%
+Sleep, 300
+Send, {Enter}
+
+
 
 Goto, start
 Return
