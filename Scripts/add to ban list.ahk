@@ -2,7 +2,16 @@
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
 
-MsgBox, 0, In case of unexpected behaviour, Press Windows+X if the program shows unexpected behaviour like opening up different programs
+warning =
+(
+Ranged and Melee Weapon Hit Detection
+In areas of intense action, players may find themselves firing shots or landing strikes that do not cause damage to their targets.
+While small improvements continue to be delivered during our regular updates, we are continuing to investigate and identify further improvements to the player combat experience.
+
+AKA. Press Windows+X to force quit the program
+)
+
+MsgBox, %warning%
 
 start:
 
@@ -10,18 +19,22 @@ start:
 
 tutorial =
 (
-ddfgdsdassdkjhgggggggggggggggggggggggggggggggggggggggggg
-df
-sdf
-sd
-fs
-ds
+For ashen bans open the Ashen tab and enter the specific info.
+this will add them to the ban list and add them in AoA.
+
+For requiem bans enter the entire entry as shown in AoA. INCLUDING GT:
+
+For fortune bans enter the info seperate as shown
+
+Do not forget to still react with an ashen emote to the entry.
+This might be made automatic in the future.
+but I haven't really found a good way to do this yet.
 )
 count = 0
 reqcount = 0
 fofcount = 0
 loopCount = 0
-banlist = {#}command-testing
+banlist = {#}ban-list
 
 ; Gui with input and options
 
@@ -136,17 +149,14 @@ OutputDebug, Determining behaviour
 Gui, Destroy
 if (count == 6 and reqcount == 0 and fofcount == 0)
 {
-    MsgBox, Ashen
     Goto ashen
 }
 else if (count == 0 and reqcount == 1 and fofcount == 0)
 {
-    MsgBox, Requiem
     Goto requiem
 }
 else if (count == 0 and reqcount == 0 and fofcount == 4)
 {
-    MsgBox, FoF
     Goto fof
 }
 Else
