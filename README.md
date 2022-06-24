@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.8.0] - 2022-06
+## [1.8.0] - 2022-06-24
 
 ### Added
 - Added GUI to staffchecking script so you can seperate the entire process if you want to
