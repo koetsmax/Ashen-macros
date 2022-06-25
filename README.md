@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.8.1] - 2022-06-25
+
+### Changed
+- Fixed XLR's OCD problem
+
+
 ## [1.8.0] - 2022-06-24
 
 ### Added
