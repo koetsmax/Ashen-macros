@@ -54,7 +54,7 @@ If !FileExist("settings.ini")
 Gui, Add, Tab3,, Input|How to use
 
 Gui, Add, Text,, Discord ID:
-Gui, Add, Text,, xbox Gamertag:
+Gui, Add, Text,, Xbox Gamertag:
 Gui, Add, Edit, vuserID ym x100 y31
 Gui, Add, Edit, vxboxGT
 Gui, Add, Radio, vall Checked x225 y34, Entire staffcheck

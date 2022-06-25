@@ -497,5 +497,3 @@ GuiEscape:
 ExitApp
 Return
 #x::ExitApp
-
-Return
