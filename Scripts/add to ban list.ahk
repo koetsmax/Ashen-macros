@@ -8,7 +8,7 @@ Ranged and Melee Weapon Hit Detection
 In areas of intense action, players may find themselves firing shots or landing strikes that do not cause damage to their targets.
 While small improvements continue to be delivered during our regular updates, we are continuing to investigate and identify further improvements to the player combat experience.
 
-AKA. Press Windows+X to force quit the program
+TLDR: Press Windows+X to force quit the program
 )
 
 MsgBox, %warning%

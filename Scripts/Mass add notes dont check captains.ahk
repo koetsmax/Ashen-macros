@@ -14,7 +14,7 @@ TLDR: Press Windows+X to force quit the program
 MsgBox, %warning%
 ;variables 
 
-commandschannel = {#}on-duty-commands
+commandschannel = {#}captain-commands
 noteslist = notes list
 notesnew = notes new
 OutputDebug, Variables Initialized
@@ -37,7 +37,7 @@ Sleep, 120
 Send, ^k
 Sleep, 120
 Send, %commandschannel%
-Sleep, 300
+Sleep, 400
 Send, {enter}
 OutputDebug, Opened on-duty-commands
 Sleep, 2000
@@ -45,43 +45,25 @@ Send, a
 Sleep, 150
 Send, ^a{Backspace}
 
-Loop, parse, userIDs, `,
+Loop, parse, userIDs, %A_Space%
 {
     WinActivate, ahk_exe Discord.exe
     OutputDebug, %A_LoopField%
     if A_LoopField is Integer
     {
+        OutputDebug, Adding note
         Sleep, 150
-        Send, /%noteslist%
+        Send, /%notesnew%
         Sleep, 1200
         Send, {enter}
         Sleep, 500
         Send, %A_LoopField%
+        Sleep, 500
+        Send, {enter}
+        Sleep, 500
+        Send {Raw}%Note%
         Sleep, 300
         Send, {enter}{enter}
-        OutputDebug, executed notes list
-        MsgBox, 4, Does this note still need to be added?, Press YES to place the note, and NO to cancel
-        IfMsgBox, Yes
-        {
-            OutputDebug, Adding note
-            Sleep, 150
-            Send, /%notesnew%
-            Sleep, 1200
-            Send, {enter}
-            Sleep, 500
-            Send, %A_LoopField%
-            Sleep, 500
-            Send, {enter}
-            Sleep, 500
-            Send {Raw}%Note%
-            Sleep, 300
-            Send, {enter}{enter}
-        }
-        IfMsgBox, No
-        {
-            OutputDebug, Not adding notes
-            MsgBox, 0, Skipping to next ID, Skipping to next ID
-        }
     } Else {
         MsgBox, userID %A_LoopField% contains Illegal characters
     }

@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.9.1] - 2022-07-04
+
+### Changed
+
+- Fixed a crash when pressing no in a message box
+
+## [1.9.0] - 2022-07-04
+
+### Added
+
+- Added extra channel switch to on-duty-commands after doing elemental commands just in case
+- Select channel to do commands in (default = on-duty-commands)
+- Added a check for userid length
+- Added an option to check userID and Gamertag before doing the macro to see if the user has been checked before
+- Added logs to staffcheck script
+
+
 ## [1.8.1] - 2022-06-25
 
 ### Changed
