@@ -1,6 +1,13 @@
 # Changelog
 
+## [1.9.2] - 2022-07-04
+
+### Changed
+
+- Fixed where windows would look for logclass.ahk in a different directory
+
 ## [1.9.1] - 2022-07-04
+
 
 ### Changed
 
