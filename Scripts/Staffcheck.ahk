@@ -4,7 +4,7 @@ SetWorkingDir, %A_ScriptDir%
 
 ; Include logclass
 
-#Include LogClass.ahk
+#Include %A_ScriptDir%/LogClass.ahk
 
 ; Initizalize log
 
