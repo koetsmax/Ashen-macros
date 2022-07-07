@@ -2,3 +2,4 @@ TODO.txt
 compiler.ahk
 staffcheck_unobfuscated.ahk
 userlist_obfuscator.ahk
+*.log

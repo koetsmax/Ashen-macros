@@ -480,12 +480,10 @@ Send, {right}
 if fofreason contains ???
 {
     fofreason = N/A
-    Send, {Right}
     Sleep, 200
     Send, {Raw}%fofreason%
     Sleep, 250
 } else {
-    Send, {Right}
     Sleep, 200
     Send, {Raw}%fofreason%
     Sleep, 250

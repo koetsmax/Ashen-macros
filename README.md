@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.9.3] - 2022-07-07
+
+### Changed
+
+- Fixed an issue where the reason for a ban would go into column F instead of E
+
 ## [1.9.2] - 2022-07-04
 
 ### Changed
