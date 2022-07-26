@@ -46,8 +46,7 @@ After you have set everything up press Continue and the script will run.
 ondutychat = {#}on-duty-chat
 invitetracker = {#}invite-tracker
 sotofficial = {#}official-swag
-info = info data
-lhist = loghistory full
+report = loghistory report
 noteslist = notes list
 notesnew = notes new
 pagenumber = 1
@@ -79,7 +78,7 @@ Gui, Add, Text,, Channel:
 Gui, Add, Checkbox, vsearchid, Search ID and GT through Ashen to see`nif they have already been checked before?
 Gui, Add, Edit, vuserID ym x100 y31
 Gui, Add, Edit, vxboxGT
-Gui, Add, ComboBox, vchannel, staff-commands|on-duty-commands||captain-commands|
+Gui, Add, ComboBox, vchannel, staff-commands|on-duty-commands||captain-commands|command-testing
 Gui, Add, Radio, vall Checked x250 y34, Entire staffcheck
 Gui, Add, Radio, velemental, Elemental commands
 Gui, Add, Radio, vashen, Ashen commands
@@ -113,12 +112,12 @@ if userID is not integer
 
 useridLength := StrLen(userID)
 
-if (useridLength != 18)
+if not (useridLength == 18 or useridLength == 19)
 {   
-    log.addLogEntry("Userid invalid (invalid length): " . useridLength . " (should be 18) userID entered: "userID)
+    log.addLogEntry("Userid invalid (invalid length): " . useridLength . " (should be 18 or 19) userID entered: "userID)
     OutputDebug, %userID%
     Gui, Destroy
-    MsgBox, Error, Userid: %userID% is invalid. UserID MUST be 18 characters in length
+    MsgBox, Error, Userid: %userID% is invalid. UserID MUST be 18 or 19 characters in length
     Goto start
 }
 
@@ -221,48 +220,17 @@ Send, a
 Sleep, 150
 Send, ^a{Backspace}
 
-; check info data
+; check loghistory report data
 
 Sleep, 800
-Send, /%info%
-Sleep, 1600
-Send, {enter}user{enter}
-Sleep, 600
-Send, %userID%
-Sleep, 300
-Send, {enter}{enter}
-log.addLogEntry("Executed command: /info data user")
-
-; check log hist
-
-Sleep, 150
-Send, /%lhist%
+Send, /%report%
 Sleep, 1600
 Send, {enter}
 Sleep, 600
 Send, %userID%
 Sleep, 300
 Send, {enter}{enter}
-log.addLogEntry("Executed command: /loghistory full")
-
-; check notes
-
-Sleep, 150
-Send, /%noteslist%
-Sleep, 1600
-Send, {enter}
-Sleep, 600
-Send, %userID%
-Sleep, 300
-Send, {enter}{enter}
-log.addLogEntry("Executed command: /notes list")
-Sleep, 2500
-
-; get RGB value of specific Pixel
-
-PixelGetColor, RGBcolour, 963, 1791, RGB
-
-; Multiple pages of notes?
+log.addLogEntry("Executed command: /loghistory report")
 
 Loop,
 {
@@ -289,15 +257,18 @@ Loop,
         Break
     }
 }
+Sleep, 250
 
 ; add GT to notes if needed
 
-Sleep, 2500
-if (RGBcolour == 0x49443C) {
-    log.addLogEntry("Adding GT to notes (pixelcheck)")
+MsgBox, 4, Add GT to notes?, Press Yes to add GT to notes if necessary
+IfMsgBox, Yes
+{
+    WinActivate, ahk_exe Discord.exe
+    log.addLogEntry("Adding GT to notes (manual)")
     Sleep, 150
     Send, /%notesnew%
-    Sleep, 1600
+    Sleep, 1200
     Send, {enter}
     Sleep, 500
     Send, %userID%
@@ -307,66 +278,8 @@ if (RGBcolour == 0x49443C) {
     Send, GT: %xboxGT%
     Sleep, 300
     Send, {enter}{enter}
-} else if (RGBcolour == 0x32353B){
-    log.addLogEntry("not adding gt to notes (pixelcheck)")
-    MsgBox, 4, Add note with GT?, Press YES to place a note with the gamertag if the autoplacement failed.
-    IfMsgBox, Yes
-    {
-        WinActivate, ahk_exe Discord.exe
-        log.addLogEntry("Adding GT to notes (manual)")
-        Sleep, 150
-        Send, /%notesnew%
-        Sleep, 1600
-        Send, {enter}
-        Sleep, 500
-        Send, %userID%
-        Sleep, 500
-        Send, {enter}
-        Sleep, 500
-        Send, GT: %xboxGT%
-        Sleep, 300
-        Send, {enter}{enter}
-    }
-} else if (RGBcolour == 0x36393F){
-    log.addLogEntry("not adding gt to notes (pixelcheck)")
-    MsgBox, 4, Add note with GT?, Press YES to place a note with the gamertag if the autoplacement failed.
-    IfMsgBox, Yes
-    {
-        WinActivate, ahk_exe Discord.exe
-        log.addLogEntry("Adding GT to notes (manual)")
-        Sleep, 150
-        Send, /%notesnew%
-        Sleep, 1600
-        Send, {enter}
-        Sleep, 500
-        Send, %userID%
-        Sleep, 500
-        Send, {enter}
-        Sleep, 500
-        Send, GT: %xboxGT%
-        Sleep, 300
-        Send, {enter}{enter}
-    }
-} else {
-    MsgBox, 4, Pixelcheck failed, Press Yes to add GT to notes anyway if necessary
-    IfMsgBox, Yes
-    {
-        WinActivate, ahk_exe Discord.exe
-        log.addLogEntry("Adding GT to notes (manual)")
-        Sleep, 150
-        Send, /%notesnew%
-        Sleep, 1200
-        Send, {enter}
-        Sleep, 500
-        Send, %userID%
-        Sleep, 500
-        Send, {enter}
-        Sleep, 500
-        Send, GT: %xboxGT%
-        Sleep, 300
-        Send, {enter}{enter}
-    }
 }
+
 
 MsgBox, 0, Elemental commands, Press OK once you have looked through the Elemental commands
 

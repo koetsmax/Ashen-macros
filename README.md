@@ -1,12 +1,27 @@
 # Changelog
 
-## [1.9.3] - 2022-07-07
+## [1.10.0] - 
+
+
+### Added
+
+- Added a macro to turn IDs into mentions
 
 ### Changed
 
-- Fixed an issue where the reason for a ban would go into column F instead of E
+- Added support for discord's new 19 char snowflakes
+- GREATLY increased the speed of the staffcheck macro by making use of elementals new loghistory report and removing some obsolete code
+- Fixed an issue where it lost its mind and banned someone (rip rustygamer)
+
+## [1.9.3] - 2022-07-07
+
+
+### Changed
+
+- Fixed an issue where the reason for a ban would go into column F instead of column E
 
 ## [1.9.2] - 2022-07-04
+
 
 ### Changed
 
