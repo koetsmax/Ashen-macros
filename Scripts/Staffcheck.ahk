@@ -112,12 +112,12 @@ if userID is not integer
 
 useridLength := StrLen(userID)
 
-if not (useridLength == 18 or useridLength == 19)
+if not (useridLength == 17 or useridLength == 18 or useridLength == 19)
 {   
-    log.addLogEntry("Userid invalid (invalid length): " . useridLength . " (should be 18 or 19) userID entered: "userID)
+    log.addLogEntry("Userid invalid (invalid length): " . useridLength . " (should be 17, 18 or 19) userID entered: "userID)
     OutputDebug, %userID%
     Gui, Destroy
-    MsgBox, Error, Userid: %userID% is invalid. UserID MUST be 18 or 19 characters in length
+    MsgBox, Error, Userid: %userID% is invalid. UserID MUST be 17, 18 or 19 characters in length
     Goto start
 }
 
