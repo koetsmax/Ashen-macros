@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.1] - 08-19-2022
+
+
+### Changed
+
+- Bug fix in autospiker
+
 ## [1.11.0] - 08-19-2022
 
 
