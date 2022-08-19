@@ -5,7 +5,8 @@
 
 ### Changed
 
-- Bug fix in autospiker
+- Bug fix in autospiker script
+- Bug fix in staffcheck script
 
 ## [1.11.0] - 2022-08-19
 

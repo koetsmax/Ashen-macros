@@ -41,6 +41,7 @@ TLDR: Press Windows+X to force quit the program
 
 MsgBox, %warning%
 start:
+buttoncontinueonthisversion:
 Gui, destroy
 
 ;variables
@@ -427,7 +428,10 @@ Version1 := github
 Version2 := Local
 Latest := VersionCompare(Version1, Version2)
 if (latest == 0)
+{
     MsgBox, You are currently on the latest release
+    Goto, start
+}
 else if (Latest == 1)
 {
     Gui, Add, Text,, There is an update available! `n`nYour version:    %Local%. `nLatest version: %github%
