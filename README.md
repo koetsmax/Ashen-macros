@@ -1,6 +1,37 @@
 # Changelog
 
-## [1.10.0] - 
+## [1.11.0] - 08-19-2022
+
+
+### Added
+
+- Autospiker
+- Added Auto Port Spiker
+- Enter multiple Requiem entries at once in add to ban list
+- Added confirm option to post ban to AoA for ashen bans
+- Added stephmode to add to ban list.ahk (who knows what it does)
+- Added add notes.ahk. Replaces the old script with more and better functionality
+- Added add warnings.ahk. Replaces the old script with more and better functionality
+- Added check for updates button in staffchecking script
+
+### Changed
+
+- Completely overhauled staffchecking script. it should be a few seconds faster now.
+- Fixed save your changes to this site error
+- Fixed Steph's weird bug where it would send separate messages for good to check in on-duty-chat by formatting good to check message beforehand and pasting it instead of typing it out
+- Now actually using functions in the staffcheck script
+- Customize good to check message is now embedded in the staffchecking script (you will have to remake your messages. but trust me, its easier)
+- Fixed issue in add to ban list where requiem ban userIDs would sometimes swap with the discord name
+
+### Removed
+- Customize good to check.ahk (obsolete)
+- Mass add notes.ahk
+- Mass add notes dont check captains.ahk
+- Mass add warnings.ahk
+- enter5min.ahk
+- rule 5 warning.ahk
+
+## [1.10.0] - 2022-07-27
 
 
 ### Added
@@ -55,7 +86,7 @@
 ## [1.8.0] - 2022-06-24
 
 ### Added
-- Added GUI to staffchecking script so you can seperate the entire process if you want to
+- Added GUI to staffchecking script so you can separate the entire process if you want to
 - Added how to use for staffchecking script
 - Added how to use for add to ban list
 - Added GUI for add to ban list script
@@ -114,7 +145,7 @@
 - Delay fine tuning
 - Fixed mass add notes to point to correct channel
 
-## Removed
+### Removed
 - readme.txt
 
 

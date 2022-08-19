@@ -1,10 +1,22 @@
 #SingleInstance, Force
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
-
-; Include logclass
-
+StringCaseSense, On
 #Include %A_ScriptDir%/LogClass.ahk
+
+; Read INI
+
+IfNotExist, settings.ini
+{
+    MsgBox, settings.ini file not found. Creating file...
+    FileAppend, , settings.ini
+    IniWrite, userID Good to check -- GT: xboxGT, settings.ini, staffcheck, goodtocheckmessage
+    IniWrite, userID **Not** Good to check -- GT: xboxGT -- Reason, settings.ini, staffcheck, notgoodtocheckmessage
+    log.addLogEntry("Created settings.ini")
+}
+
+IniRead, gtc, settings.ini , staffcheck, goodtocheckmessage
+IniRead, ngtc, settings.ini , staffcheck, notgoodtocheckmessage
 
 ; Initizalize log
 
@@ -28,18 +40,16 @@ TLDR: Press Windows+X to force quit the program
 )
 
 MsgBox, %warning%
-; log.addLogEntry("Starting authenticator")
-; auth()
-
-; return
 start:
+Gui, destroy
 
-; Variables
+;variables
 
 tutorial = 
 (
 The input tab is to enter the ID and gamertag of the user you want to check.
-In the options tab you can select what you want to check. (default is all)
+
+In the customization tab you can change the check messages to your personal liking
 
 After you have set everything up press Continue and the script will run.
 )
@@ -51,34 +61,20 @@ noteslist = notes list
 notesnew = notes new
 pagenumber = 1
 log.addLogEntry("Variables initialized")
-
-; Check if .ini file exists
-
-IfNotExist, settings.ini
-{
-    MsgBox, settings.ini file not found. Creating file...
-    FileAppend, , settings.ini
-    IniWrite, % "", settings.ini, staffcheck, gtcbeforeid
-    IniWrite, Good to check -- GT:, settings.ini, staffcheck, gtcafterid
-    IniWrite, % "", settings.ini, staffcheck, gtcaftergt
-    IniWrite, % "", settings.ini, staffcheck, notgtcbeforeid
-    IniWrite, **Not** Good to check -- GT:, settings.ini, staffcheck, notgtcafterid
-    IniWrite, --, settings.ini, staffcheck, notgtcaftergt
-    IniWrite, % "", settings.ini, staffcheck, notgtcafterreason
-    log.addLogEntry("Created settings.ini")
-}
+IniRead, gtc, settings.ini , staffcheck, goodtocheckmessage
+IniRead, ngtc, settings.ini , staffcheck, notgoodtocheckmessage
 
 ; Gui with input and options
 
-Gui, Add, Tab3,, Input|How to use
+Gui, Add, Tab3,, Input|Customization|How to use
 
 Gui, Add, Text,, Discord ID:
 Gui, Add, Text,, Xbox Gamertag:
 Gui, Add, Text,, Channel:
-Gui, Add, Checkbox, vsearchid, Search ID and GT through Ashen to see`nif they have already been checked before?
+Gui, Add, Checkbox, vsearchid y+15p, Search ID and GT through Ashen to see`nif they have already been checked before?
 Gui, Add, Edit, vuserID ym x100 y31
 Gui, Add, Edit, vxboxGT
-Gui, Add, ComboBox, vchannel, staff-commands|on-duty-commands||captain-commands|command-testing
+Gui, Add, ComboBox, vchannel, staff-commands|on-duty-commands||captain-commands|admin-commands
 Gui, Add, Radio, vall Checked x250 y34, Entire staffcheck
 Gui, Add, Radio, velemental, Elemental commands
 Gui, Add, Radio, vashen, Ashen commands
@@ -87,10 +83,20 @@ Gui, Add, Radio, vsot, Check Sot official
 Gui, Add, Radio, vgoodtocheck, Good to check
 
 Gui, Tab, 2
+Gui, Add, Text,, discord id = userID. gamertag = xboxGT. reason = Reason. (case sensitive)
+Gui, Add, Text,, Good to check message:
+Gui, Add, Edit, r1 vgtc w400, %gtc%
+Gui, Add, Text,, Not Good to check message:
+Gui, Add, Edit, r1 vngtc w400, %ngtc%
+Gui, Add, Button,, Save changes
+Gui, Add, Button,x+10p, Reset to default
+
+Gui, Tab, 3
 Gui, Add, Text,, %tutorial%
 Gui, Tab
 Gui, Add, Button, x10, Continue
-Gui, show, w400 h185
+Gui, Add, Button, x+10p, Check for updates
+Gui, show
 log.addLogEntry("Created GUI")
 
 Return
@@ -121,8 +127,8 @@ if not (useridLength == 17 or useridLength == 18 or useridLength == 19)
     Goto start
 }
 
-MsgBox, 0, , DO NOT TOUCH YOUR MOUSE OR KEYBOARD WHEN THIS SCRIPT IS RUNNING. ONLY TOUCH YOUR MOUSE AND OR KEYBOARD WHEN ONE OF THESE BOXES HAVE POPPED UP. The script will now start
-Sleep, 1500
+MsgBox, DO NOT TOUCH YOUR MOUSE OR KEYBOARD WHEN THIS SCRIPT IS RUNNING. ONLY TOUCH YOUR MOUSE AND OR KEYBOARD WHEN ONE OF THESE BOXES HAVE POPPED UP. The script will now start
+Sleep, 1000
 
 WinActivate, ahk_exe Discord.exe
 log.addLogEntry("Entered discord")
@@ -137,32 +143,14 @@ log.addLogEntry("Check if searchid is enabled...")
 if searchid
 {
     log.addLogEntry("Searchid is enabled")
-    Send, ^a{Backspace}
+    cleartypingbar()
     Send, {Escape}
-    Sleep, 150
-    Send, ^k
-    Sleep, 100
-    Send, %commandschannel%
-    Sleep, 350
-    Send, {enter}
-    log.addLogEntry("Opened: "commandschannel)
-    Sleep, 2000
-    Send, ^f
-    Sleep, 150
-    Send, ^a{Backspace}
-    Sleep, 120
-    Send, %userID% 
-    Sleep, 150
-    Send, {enter}
+    switchchannel(commandschannel)
+    search(userID)
     log.addLogEntry("Started search for ID in ashen")
     MsgBox, Click OK when you are ready to continue
-
-    Send, ^a{Backspace}
-    Sleep, 500
-    Send, %xboxGT% 
-    Sleep, 150
-    Send, {enter}
-    Sleep, 800
+    WinActivate, ahk_exe Discord.exe   
+    search(xboxGT)
     log.addLogEntry("Started search for gamertag in ashen")
     MsgBox, Click OK when you are ready to continue
     Send, {Escape}
@@ -174,24 +162,24 @@ if searchid
         log.addLogEntry("Staffcheck canceled after pressing No")
         Gui, Destroy
         Goto, start
-    }   
+    }
+    
 }
-
 log.addLogEntry("Check which radio was entered")
 
 ; Go to sub-routine
 Gui, Destroy
-if (all == 1)
-    Goto all
-else if (elemental == 1)
+if all
     Goto elemental
-else if (ashen == 1)
+else if elemental
+    Goto elemental
+else if ashen
     Goto ashen
-else if (invites == 1)
+else if invites
     Goto invites
-else if (sot == 1)
+else if sot
     Goto sotofficial
-else if (goodtocheck == 1)
+else if goodtocheck
     Goto goodtocheck
 else
 {
@@ -199,29 +187,11 @@ else
     Goto start
 }
 Return
-all:
 
 elemental:
 
-; Move to on duty commands
-
-Sleep, 120
-Send, ^k
-Sleep, 120
-Send, %commandschannel%
-Sleep, 350
-Send, {enter}
-log.addLogEntry("Entered: "commandschannel)
-Sleep, 2000
-
-; delete all text in message box
-
-Send, a
-Sleep, 150
-Send, ^a{Backspace}
-
-; check loghistory report data
-
+switchchannel(commandschannel)
+cleartypingbar()
 Sleep, 800
 Send, /%report%
 Sleep, 1600
@@ -231,7 +201,6 @@ Send, %userID%
 Sleep, 300
 Send, {enter}{enter}
 log.addLogEntry("Executed command: /loghistory report")
-
 Loop,
 {
     MsgBox, 4, Another page of notes?, Press YES if there is another page of notes.
@@ -253,13 +222,9 @@ Loop,
         Send, {enter}
     }
     IfMsgBox, No
-    {
         Break
-    }
 }
-Sleep, 250
 
-; add GT to notes if needed
 
 MsgBox, 4, Add GT to notes?, Press Yes to add GT to notes if necessary
 IfMsgBox, Yes
@@ -279,48 +244,15 @@ IfMsgBox, Yes
     Sleep, 300
     Send, {enter}{enter}
 }
-
-
 MsgBox, 0, Elemental commands, Press OK once you have looked through the Elemental commands
-
-; Check if radio = all
 
 if !all
     Goto, start
 
 ashen:
 
-; Go to on-duty-commands
-if !all{
-    Sleep, 120
-    Send, ^k
-    Sleep, 120
-    Send, %commandschannel%
-    Sleep, 350
-    Send, {enter}
-    log.addLogEntry("Opened: "commandschannel)
-    Sleep, 2000
-}
-
-if (all == 1){
-    Sleep, 120
-    Send, ^k
-    Sleep, 120
-    Send, %commandschannel%
-    Sleep, 350
-    Send, {enter}
-    log.addLogEntry("Opened: "commandschannel)
-    Sleep, 800
-}
-
-; Delete all text in msg box
-
-Send, a
-Sleep, 150
-Send, ^a{Backspace}
-
-; Check ashen commands
-
+switchchannel(commandschannel)
+cleartypingbar()
 WinActivate, ahk_exe Discord.exe
 OutputDebug, entered discord
 Sleep, 250
@@ -332,65 +264,29 @@ log.addLogEntry("Executed command: !xsearch")
 Sleep, 250
 MsgBox, 0, Ashen commands, Press OK once you have looked through the Ashen commands
 
-; Check if radio = all
-
 if !all
     Goto, start
 
 invites:
 
-; Invite Tracker
-
 WinActivate, ahk_exe Discord.exe
 log.addLogEntry("Opened discord")
-Send, ^k
-Sleep, 100
-Send, %invitetracker%
-Sleep, 350
-Send, {enter}
-log.addLogEntry("Opened invite tracker")
-Sleep, 2000
-Send, ^f
-Sleep, 150
-Send, ^a{Backspace}
-Send, {Escape}
-Sleep, 150
-Send, ^f
-Sleep, 120
-Send, %userID%
-Sleep, 80
-Send, {enter}
+switchchannel(invitetracker)
+search("in:#invite-tracker "userID)
 log.addLogEntry("Searched ID in invite tracker")
 MsgBox, 0, Invite Tracker, Press OK once you have looked through the invite tracker
-
-; Check if radio = all
 
 if !all
     Goto, start
 
 sotofficial:
 
-; Check sot official posts
-
 WinActivate, ahk_exe Discord.exe
 log.addLogEntry("Opened discord")
 Send, ^a{Backspace}
 Send, {Escape}
-Sleep, 150
-Send, ^k
-Sleep, 100
-Send, %sotofficial%
-Sleep, 350
-Send, {enter}
-log.addLogEntry("Opened sot official")
-Sleep, 2000
-Send, ^f
-Sleep, 150
-Send, ^a{Backspace}
-Sleep, 120
-Send, from: %userID% 
-Sleep, 150
-Send, {enter}
+switchchannel(sotofficial)
+search("from: "userID)
 log.addLogEntry("Searched sot official messages")
 MsgBox, 4, Sot Official, Press YES if there are a lot of messages and the search results need to be narrowed down. press NO if there are no Anti-alliance messages.
 IfMsgBox, Yes
@@ -400,310 +296,198 @@ IfMsgBox, Yes
     Send, ^f
     Sleep, 300
     Send, {Space}alliance
-    Sleep, 100
+    Sleep, 200
     Send, {enter}
     log.addLogEntry("Narrowed down search results")
     MsgBox, 0, Sot Official, Press OK Once you have looked through their messages in Sot Official
 }
-
-; Check if radio = all
 
 if !all
     Goto, start
 
 goodtocheck:
 
-; Staffcheck complete
-
 WinActivate, ahk_exe Discord.exe
 log.addLogEntry("Opened discord")
-Sleep, 250
-Send, ^a{Backspace}
-Sleep, 100
+cleartypingbar()
 Send, {Escape}
 Sleep, 100
 MsgBox, 3, Good to check?, Is this person good to check? Press cancel to cancel if you have to look into this person more.
 IfMsgBox, Yes
 {
-    IniRead, gtcbeforeid, settings.ini , staffcheck, gtcbeforeid
-    IniRead, gtcafterid, settings.ini , staffcheck, gtcafterid
-    IniRead, gtcaftergt, settings.ini , staffcheck, gtcaftergt
-    log.addLogEntry("Read .ini file for good to check message")
-    Sleep, 150
-    Send, ^k
-    Sleep, 100
-    Send, %ondutychat%
-    Sleep, 350
-    Send, {enter}
-    log.addLogEntry("Opened on duty chat")
-    Sleep, 2000
-    Send, a
-    Sleep, 150
-    Send, ^a{Backspace}
-    Sleep, 100
-    Send,{Raw} %gtcbeforeid% 
-    Sleep, 100
-    Send,{Raw} <@%userID%> 
-    Sleep, 100
-    Send,{Raw} %gtcafterid% 
-    Sleep, 100
-    Send,{Raw} %xboxGT% 
-    Sleep, 100
-    Send,{Raw} %gtcaftergt%
-    Sleep, 250
-    Send, {enter}
-    log.addLogEntry("Sent good to check message")
+    oldclipboard := clipboard
+    gtc := StrReplace(gtc, "userID", "<@" . userID . ">")
+    gtc := StrReplace(gtc, "xboxGT", xboxGT)
+    clipboard := gtc
 }
 IfMsgBox, No
 {
-    IniRead, notnotgtcbeforeid, settings.ini , staffcheck, notgtcbeforeid
-    IniRead, notgtcafterid, settings.ini , staffcheck, notgtcafterid
-    IniRead, notgtcaftergt, settings.ini , staffcheck, notgtcaftergt
-    IniRead, notgtcafterreason, settings.ini , staffcheck, notgtcafterreason
-    log.addLogEntry("Read .ini file for not good to check message")
     InputBox, Reason, Reason, Please enter the Reason that the user is not good to check, , , 125
+    oldclipboard := clipboard
+    ngtc := StrReplace(ngtc, "userID", "<@" . userID . ">")
+    ngtc := StrReplace(ngtc, "xboxGT", xboxGT)
+    ngtc := StrReplace(ngtc, "Reason", Reason)
+    clipboard := ngtc
+}
+IfMsgBox, Cancel
+{
+    log.addLogEntry("Cancel was pressed in post check message")
+    Goto, start
+}
+switchchannel(ondutychat)
+cleartypingbar()
+Send, ^v
+log.addLogEntry("Sent (not) good to check message")
+Sleep, 500
+Send, {Enter}
+Clipboard := oldClipboard
+Goto, start
+return
+
+Buttonsavechanges:
+Gui, Submit
+IniWrite, %gtc%, settings.ini, staffcheck, goodtocheckmessage
+IniWrite, %ngtc%, settings.ini, staffcheck, notgoodtocheckmessage
+Gui, Destroy
+Goto, start
+return
+
+Buttonresettodefault:
+MsgBox, 4,, Are you sure you want to reset these options to default?
+IfMsgBox, Yes
+{
+    IniWrite, userID Good to check -- GT: xboxGT, settings.ini, staffcheck, goodtocheckmessage
+    IniWrite, userID **Not** Good to check -- GT: xboxGT -- Reason, settings.ini, staffcheck, notgoodtocheckmessage
+}
+
+Gui, Destroy
+Goto, start
+return
+
+switchchannel(x)
+{
+    WinActivate, ahk_exe Discord.exe
+    Sleep, 250
     Send, ^k
     Sleep, 100
-    Send, %ondutychat%
-    Sleep, 350
+    Send, % x
+    Sleep, 600
     Send, {enter}
-    log.addLogEntry("Opened on duty chat")
+    log.addLogEntry("Opened: "x)
     Sleep, 2000
+}
+return
+
+cleartypingbar()
+{
+    WinActivate, ahk_exe Discord.exe
+    sleep, 150
     Send, a
     Sleep, 150
     Send, ^a{Backspace}
     Sleep, 100
-    Send,{Raw} %notgtcbeforeid% 
-    Sleep, 100
-    Send,{Raw} <@%userID%> 
-    Sleep, 100
-    Send,{Raw} %notgtcafterid% 
-    Sleep, 100
-    Send,{Raw} %xboxGT% 
-    Sleep, 100
-    Send,{Raw} %notgtcaftergt% 
-    Sleep, 100
-    Send,{Raw} %Reason% 
-    Sleep, 100
-    Send,{Raw} %notgtcafterreason%
-    Sleep, 250
-    Send, {enter}
-    log.addLogEntry("Sent not good to check message")
 }
+return
 
+search(x)
+{
+    oldClipboard := Clipboard
+    Clipboard := x
+    WinActivate, ahk_exe Discord.exe
+    Send, ^f
+    cleartypingbar()
+    Send, ^v
+    Sleep, 150
+    Send, {enter}
+    Clipboard := oldClipboard
+}
+return
 
-Goto, start
 GuiClose:
 GuiEscape:
-log.addLogEntry("Script closed by closing GUI...")
+log.addLogEntry("Script closed by closing GUI")
 log.finalizeLog()
 ExitApp
 return
 
-ihidestr(thisstr)
+ButtonCheckforupdates:
+Gui, Submit
+Gui, Destroy
+owner := "koetsmax"
+repo := "ashen-macros"
+res := WebRequest("https://api.github.com/repos/" . owner . "/" . repo . "/releases/latest",,,, error := "")
+if error
+    MsgBox,, Error, % error . "`n`nresponse:`n" . res
+else
+    pos := RegExMatch(res, """tag_name"":\s*""\K[^""]*", github)
+FileRead, Local, ..\version
+if (Local == "")
+    Local = 0
+Version1 := github
+Version2 := Local
+Latest := VersionCompare(Version1, Version2)
+if (latest == 0)
+    MsgBox, You are currently on the latest release
+else if (Latest == 1)
 {
-	return thisstr
+    Gui, Add, Text,, There is an update available! `n`nYour version:    %Local%. `nLatest version: %github%
+    Gui, Add, Button,x10 y+5n, Download the new version
+    Gui, Add, Button,x+10p, Continue on this version
+    Gui, Show
 }
-
-
-decode_hidestr(startstr) 
+else if (Latest == 2)
 {
-	global	
-;$OBFUSCATOR: $DEFGLOBVARS: hexdigits
-	critical
-	static newstr, startstrlen, charnum, hinibble, lownibble, mybinary
-;$OBFUSCATOR: $DEFLOSVARS: newstr, startstrlen, charnum, hinibble, lownibble, mybinary
+    MsgBox, You are currently ahead of the github release
+    Goto, start
+}
+return
 
-	hexdigits = % "0123456789abcdef"
-		
-	decode_hexshiftkeys(startstr)
-	
-	startstr = % substr(startstr, 1, 1) . substr(startstr, 6)
-	startstrlen = % strlen(startstr)
-		
-	newstr = 
-	loop, % strlen(startstr) 
-		newstr = % substr(startstr, a_index, 1) . newstr
-	
-	startstr = % newstr
-	newstr = 
-	charnum = 1
-	loop
+VersionCompare(version1, version2)
+{
+	StringSplit, verA, version1, .
+	StringSplit, verB, version2, .
+	Loop, % (verA0> verB0 ? verA0 : verB0)
 	{
-		if (charnum >startstrlen)
-			break
-			
-		hinibble = % substr(startstr, charnum, 1)
-		hinibble = % instr(hexdigits, hinibble) - 1
-		
-		lownibble = % substr(startstr, charnum + 1, 1)
-		lownibble = % instr(hexdigits, lownibble) - 1
-		
-		hinibble := decode_shifthexdigit(hinibble)
-		lownibble := decode_shifthexdigit(lownibble)
-		
-		mybinary = % hinibble * 16 + lownibble
-		newstr .= chr(mybinary)
-		
-		charnum += 2		
+		if (verA0 < A_Index)
+			verA%A_Index% := "0"
+		if (verB0 < A_Index)
+			verB%A_Index% := "0"
+		if (verA%A_Index% > verB%A_Index%)
+			return 1
+		if (verB%A_Index% > verA%A_Index%)
+			return 2
 	}
-		
-	newstr = % fixescapes(newstr)
-		
-	return, newstr	
+	return 0
 }
-decode_hexshiftkeys(startstr)
-{
-	global
-;$OBFUSCATOR: $DEFGLOBVARS: decodekey, ishexchar, useshiftkey
-	
-	decodekey := "fff@kkf1ffkfkfkfff#k1fk@kf#@fffk@#kk"
-	ishexchar := "fff@f1ff@kffkk#f1fffffkf"
-	
-	%decodekey%%ishexchar%1 = % substr(startstr, 2, 1)
-	%decodekey%%ishexchar%2 = % substr(startstr, 3, 1)
-	%decodekey%%ishexchar%3 = % substr(startstr, 4, 1)
-	%decodekey%%ishexchar%4 = % substr(startstr, 5, 1)
-	
-	loop, 4
-		%decodekey%%a_index% = % instr(hexdigits, %decodekey%%ishexchar%%a_index%) - 1
-			
-	useshiftkey = 0
-}	
+return
 
-decode_shifthexdigit(hexvalue)
+WebRequest(url, method := "GET", HeadersArray := "", body := "", ByRef error := "") 
 {
-	global
-	
-	useshiftkey++
-	if (useshiftkey > 4)
-		useshiftkey = 1	
-	
-	hexvalue -= %decodekey%%useshiftkey%
-	
-	if (hexvalue < 0) 
-		hexvalue += 16
-		
-	return hexvalue	
-}
-
-fixescapes(forstr)
-{
-	global
-	
-	StringReplace, forstr, forstr, % "````", % "``", all
-	StringReplace, forstr, forstr, % "``n", % "`n", all
-	StringReplace, forstr, forstr, % "``r", % "`r", all
-	StringReplace, forstr, forstr, % "``,", % "`,", all
-	StringReplace, forstr, forstr, % "``%", % "`%", all	
-	StringReplace, forstr, forstr, % "``;", % "`;", all	
-	StringReplace, forstr, forstr, % "``t", % "`t", all
-	StringReplace, forstr, forstr, % "``b", % "`b", all
-	StringReplace, forstr, forstr, % "``v", % "`v", all
-	StringReplace, forstr, forstr, % "``a", % "`a", all
-	
-	StringReplace, forstr, forstr, % """""", % """", all
-	
-	return forstr
-}
-
-;$OBFUSCATOR: $END_AUTOEXECUTE:
-
-auth()
-{
-	; Variables
-	2commandschannel = {#}staff-commands
-	getid = getid user
-	userlist:= decode_hidestr("ad3b900ec09e402e901e30de30de409e30bea0beff0e700ec09e709e609eb02e60ae400ea0ee705da0cea0fe40ce400e40ae30deb0be609e80beffde70ee70deb0be80de50fe80eec0aea0be405d502e80fe900e50dea01e70ce40ae70de60eeffbea0be90de90dea00e80ae90ee50de90be405d70ae40ae609e90dec0ee409e909e700e70beffbea09ec0ae90ce302ec02e50ce501e60be605d500eb02e802e30ae50ce40de700e70ae80aeffee30eea0ae80beb01ea0ae50beb0fe70fe50")
-    log.addLogEntry("Initialized variables for authorisation")
+    Whr := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+    Whr.Open(method, url, true)
+    for name, value in HeadersArray
+        Whr.SetRequestHeader(name, value)
+    Whr.Send(body)
+    Whr.WaitForResponse()
+    status := Whr.status
+    if (status == 403)
+        MsgBox, Your ip is being rate limited. Please try again in an hour
+    if (status != 200)
+        error := "HttpRequest error, status: " . status
     
-	; Authentication
-
-	WinActivate, ahk_exe Discord.exe
-	WinGet, iswinmax, MinMax, ahk_exe discord.exe
-	WinRestore, ahk_exe discord.exe
-	OutputDebug, %iswinmax%
-	WinGetPos, X, Y, W, H, ahk_exe discord.exe
-	WinActivate, ahk_exe Discord.exe
-	OutputDebug, entered discord
-	Send, {Escape}
-	Sleep, 120
-	Send, {Escape}
-	Sleep, 120
-	Send, ^k
-	Sleep, 120
-	Send, %2commandschannel%
-	Sleep, 350
-	Send, {enter}
-	log.addLogEntry("Opened staff commands")
-	Sleep, 2000
-
-	; Move discord window
-
-	WinMove, ahk_exe discord.exe,, 300, 150, 1200, 820
-	WinActivate, ahk_exe discord.exe
-	Sleep, 200
-	Send, a
-	Sleep, 100
-	Send, ^a
-	Sleep, 100
-	Send, {BackSpace}
-    log.addLogEntry("Activated Discord")
-
-	; Execute command
-
-	Send, /%getid%
-	Sleep, 1000
-	Send, {Enter}{Enter}
-	Sleep, 1500
-	MouseClickDrag, L, 751, 715, 715, 623
-	Send, ^c
-    log.addLogEntry("Sent getid command")
-
-	; Move window back to original position
-
-	WinMove, ahk_exe discord.exe,, %X%, %Y%, %W%, %H%
-    global xx := x
-    global yy := y
-    global ww := w
-    global hh := h
-    global iswinmaximized := iswinmax
-    log.addLogEntry("Moved discord back to %xx%, %yy%, %ww%, %hh%, %iswinmaximized%")
-	if (iswinmax == 1)
-	{
-		WinMaximize ahk_exe discord.exe
-	}
-
-	loop, parse, Clipboard, `n,`r
-	{
-	e .= A_LoopField . a_space
-	loop, parse, A_LoopField, {Space}
-	{
-		if A_LoopField is Integer
-			authID = %A_LoopField%
-	}
-	}
-
-	Loop, parse, userlist, `,
-	{
-		if (%A_LoopField% == %authID%)
-			{
-                log.addLogEntry("authID: "authID)
-				MsgBox, Logged in as: %authID%
-				Gosub, start
-				Exit
-			}
-	}
-
-	MsgBox, Authentication failed, see log for errors
-    log.addLogEntry("Authentication failed, Report to Max if you are authorized to use this" Clipboard)
-	ExitApp
+    Arr := Whr.responseBody
+    pData := NumGet(ComObjValue(arr) + 8 + A_PtrSize)
+    length := Arr.MaxIndex() + 1
+    Return StrGet(pData, length, "UTF-8")
 }
+return
 
-Return
+buttondownloadthenewversion:
+Gui, Destroy
+run, https://github.com/koetsmax/Ashen-macros/releases//latest
+
 #x::
-{   
-    log.addLogEntry("Script force closed by using Windows + X")
-    log.finalizeLog()
-    ExitApp
-}
+log.addLogEntry("Script force closed by using Windows + X")
+log.finalizeLog()
+ExitApp
+return

@@ -24,7 +24,7 @@ this will add them to the ban list and add them in AoA.
 
 For requiem bans enter the entire entry as shown in AoA. INCLUDING GT:
 
-For fortune bans enter the info seperate as shown
+For fortune bans enter the info separate as shown
 
 Do not forget to still react with an ashen emote to the entry.
 This might be made automatic in the future.
@@ -34,6 +34,7 @@ count = 0
 reqcount = 0
 fofcount = 0
 loopCount = 0
+alreadyopen = 0
 banlist = {#}ban-list
 
 ; Gui with input and options
@@ -56,6 +57,7 @@ Gui, Add, Edit, vtimezone
 Gui, Tab, 2
 Gui, Add, Text,, Full ban entry as listed in AoA:
 Gui, Add, Edit, vreqban ym x167 y31
+Gui, Add, Text,x22 y55, Enter multiple entries by separating them with an = sign
 
 Gui, Tab, 3
 Gui, Add, Text,, Discord Name:
@@ -71,6 +73,7 @@ Gui, Tab, 4
 Gui, Add, Text,, %tutorial%
 Gui, Tab
 Gui, Add, Button, x10, Continue
+Gui, Add, Checkbox, x+10p y208 vstephmode, Steph Mode
 Gui, show, w400 h235
 OutputDebug, Opened GUI
 
@@ -96,49 +99,27 @@ if (fofuserID is not Integer or "")
 ; Check not empty text boxes
 
 if not (discordname == "")
-{
     count++
-}
 if not (xboxGT == "")
-{
     count++
-}
 if not (userID == "")
-{
     count++
-}
 if not (reason == "")
-{
     count++
-}
 if not (name == "")
-{
     count++
-}
 if not (timezone == "")
-{
     count++
-}
 if not (reqban == "")
-{
     reqcount++
-}
 if not (fofname == "")
-{
    fofcount++
-}
 if not (fofxboxGT == "")
-{
     fofcount++
-}
 if not (fofuserID == "")
-{
     fofcount++
-}
 if not (fofreason == "")
-{
     fofcount++
-}
 OutputDebug, count %count%
 OutputDebug, reqcount %reqcount%
 OutputDebug, fofcount %fofcount%
@@ -148,17 +129,11 @@ OutputDebug, Determining behaviour
 
 Gui, Destroy
 if (count == 6 and reqcount == 0 and fofcount == 0)
-{
     Goto ashen
-}
 else if (count == 0 and reqcount == 1 and fofcount == 0)
-{
     Goto requiem
-}
 else if (count == 0 and reqcount == 0 and fofcount == 4)
-{
     Goto fof
-}
 Else
 {
     MsgBox, Invalid amount of arguments entered, please try again
@@ -169,40 +144,50 @@ Return
 ashen:
 
 ; Add ashen ban
+if stephmode
+{
+    WinActivate, ahk_exe firefox.exe
+    WinActivate, ahk_exe msedge.exe
+    WinActivate, ahk_exe chrome.exe
+    Winactivate, ahk_exe operagx.exe
+    Sleep, 1500
+}
+else if not stephmode
+{
+    url := "https://docs.google.com/spreadsheets/d/1V5Z61CKmJoNZn7L3PWziJdbHRVzYuxaZU4qTOIRHfWg/edit#gid=2129628623"
+    ; a temporary file, running directory must be writeable
+    outputFile := "a$$$$$$.html"
+    if (FileExist(outputFile))
+        FileDelete, %outputFile%
 
-url := "https://docs.google.com/spreadsheets/d/1V5Z61CKmJoNZn7L3PWziJdbHRVzYuxaZU4qTOIRHfWg/edit#gid=2129628623"
-; a temporary file, running directory must be writeable
-outputFile := "a$$$$$$.html"
-if (FileExist(outputFile))
-    FileDelete, %outputFile%
+    FileAppend,
+    (
+    <html>
+    <body>
+    <script>
+    document.location.href="
+    ),%outputFile%
+    FileAppend,%url%,%outputFile%
+    FileAppend,
+    (
+    "
+    </script>
+    </body>
+    </html>
+    ),%outputFile%
 
-FileAppend,
-(
-<html>
-<body>
-<script>
-document.location.href="
-),%outputFile%
-FileAppend,%url%,%outputFile%
-FileAppend,
-(
-"
-</script>
-</body>
-</html>
-),%outputFile%
+    cmdToRun := "cmd /c " . outputFile
+    run, %cmdToRun%
 
-cmdToRun := "cmd /c " . outputFile
-run, %cmdToRun%
+    Sleep, 8000
 
-Sleep, 8000
+    ; remove temporary file
+    if (FileExist(outputFile))
+        FileDelete, %outputFile%
 
-; remove temporary file
-if (FileExist(outputFile))
-    FileDelete, %outputFile%
-
-Sleep, 3000
+    Sleep, 3000
 Send, {CtrlDown}{Down}{CtrlUp}{Down}
+}
 
 send, %A_MM%/%A_DD%/%A_YYYY%
 Sleep, 250
@@ -234,6 +219,10 @@ OutputDebug, Added ban to ban list
 
 ; Add ban to AoA
 
+MsgBox, 4, Add to AoA?, Do you want to post this ban to AoA?
+IfMsgBox, No
+    Goto, start
+
 Clipboard := A_Tab
 
 WinActivate, ahk_exe Discord.exe
@@ -263,178 +252,177 @@ Send, ^v
 Send, {Raw}%reason%
 Sleep, 300
 Send, {Enter}
-
-
+Send, {Right}
 
 Goto, start
 Return
 requiem:
 
-; Add requiem ban to shared list
-
-url := "https://docs.google.com/spreadsheets/d/1V5Z61CKmJoNZn7L3PWziJdbHRVzYuxaZU4qTOIRHfWg/edit#gid=125271616"
-; a temporary file, running directory must be writeable
-outputFile := "a$$$$$$.html"
-if (FileExist(outputFile))
-    FileDelete, %outputFile%
-
-FileAppend,
-(
-<html>
-<body>
-<script>
-document.location.href="
-),%outputFile%
-FileAppend,%url%,%outputFile%
-FileAppend,
-(
-"
-</script>
-</body>
-</html>
-),%outputFile%
-
-cmdToRun := "cmd /c " . outputFile
-run, %cmdToRun%
-
-Sleep, 8000
-
-; remove temporary file
-if (FileExist(outputFile))
-    FileDelete, %outputFile%
-
-Sleep, 3000
-Send, {CtrlDown}{Down}{CtrlUp}{Down}
-
-Loop, parse, reqban, -
+Loop, parse, reqban, `=
 {
-    Sleep, 150
-    ban := Trim(A_LoopField)
-    OutputDebug, %ban%
-    loopCount++
-    OutputDebug, Current loopcount = %loopCount%
-    if (loopCount == 1){
-        if A_LoopField Contains ???
+    requiemban := A_LoopField
+    Outputdebug, %requiemban%
+    Loop, parse, requiemban, -
+    {
+        ban := Trim(A_LoopField)
+        OutputDebug, ban = %ban%
+        if ban Contains GT:
         {
-            ban = N/A
-            Send, {Right}
-            Sleep, 200
-            Send, {Raw}%ban%
-            Sleep, 250
-        } else {
-            gamertag := SubStr(ban, 4)
-            gamertag := Trim(gamertag)
-            OutputDebug, %gamertag%
-            Send, {Right}
-            Sleep, 200
-            Send, {Raw}%gamertag%
-            Sleep, 250
+        gamertag := SubStr(ban, 4)
+        gamertag := Trim(gamertag)
         }
-    } else if (loopCount == 2){
-        if A_LoopField Contains	???
+        else if ban is integer
+            userID = %ban%
+        else if ban contains #
+            discordname = %ban%
+        else if ban not contains ???
+            reason = %ban%
+        Else
+            Outputdebug, no matches found for %ban% in `n %reqban%
+    }
+
+    if stephmode
+    {
+    WinActivate, ahk_exe firefox.exe
+    WinActivate, ahk_exe msedge.exe
+    WinActivate, ahk_exe chrome.exe
+    Winactivate, ahk_exe operagx.exe
+    Sleep, 1500
+    }
+    else if not stephmode
+    {
+        if not alreadyopen
         {
-            ban = N/A
-            Send, {Right}
-            Sleep, 200
-            Send, {Raw}%ban%
-            Sleep, 250
-        } else {
-            Send, {Right}
-            Sleep, 200
-            Send, {Raw}%ban%
-            Sleep, 250
-        }
-    } else if (loopCount == 3){
-        if A_LoopField Contains ???
-        {
-            ban = N/A
-            Send, {Left}
-            Sleep, 200
-            Send, {Left}
-            Sleep, 200
-            Send, {Raw}%ban%
-            Sleep, 250
-            Send, {Right}
-            Sleep, 300
-            Send, {Right}
-            Sleep, 300
-            Send, {Right}
-            Sleep, 300
-            Send, Requiem
-            Sleep, 250
-        } else {
-            Send, {Left}
-            Sleep, 200
-            Send, {Left}
-            Sleep, 200
-            Send, {Raw}%ban%
-            Sleep, 250
-            Send, {Right}
-            Sleep, 300
-            Send, {Right}
-            Sleep, 300
-            Send, {Right}
-            Sleep, 300
-            Send, Requiem
-            Sleep, 250
-        }
-    } else if (loopCount == 4){
-        if A_LoopField Contains ???
-        {
-            ban = N/A
-            Send, {Right}
-            Sleep, 200
-            Send, {Raw}%ban%
-            Sleep, 500
-        } else {
-            Send, {Right}
-            Sleep, 200
-            Send, {Raw}%ban%
-            Sleep, 500         
+        url := "https://docs.google.com/spreadsheets/d/1V5Z61CKmJoNZn7L3PWziJdbHRVzYuxaZU4qTOIRHfWg/edit#gid=125271616"
+        outputFile := "a$$$$$$.html"
+        if (FileExist(outputFile))
+            FileDelete, %outputFile%
+
+        FileAppend,
+        (
+        <html>
+        <body>
+        <script>
+        document.location.href="
+        ),%outputFile%
+        FileAppend,%url%,%outputFile%
+        FileAppend,
+        (
+        "
+        </script>
+        </body>
+        </html>
+        ),%outputFile%
+
+        cmdToRun := "cmd /c " . outputFile
+        run, %cmdToRun%
+        Sleep, 8000
+
+        if (FileExist(outputFile))
+            FileDelete, %outputFile%
+        Sleep, 3000
+        Send, {CtrlDown}{Down}{CtrlUp}{Down}
+        Sleep, 250
         }
     }
+    if alreadyopen
+    {
+        Sleep, 250
+        Send, {Down}
+        Sleep, 250
+        Send, {CtrlDown}{Left}{CtrlUp}
+        Sleep, 600
+    }
+    oldClipboard := Clipboard
+    Clipboard := discordname
+    if (Clipboard == "")
+        Clipboard := "N/A"
+    Send, ^v
+    Sleep, 600
+    Send, {Right}
+    Sleep, 250
+    Clipboard := gamertag
+    if (Clipboard == "")
+        Clipboard := "N/A"
+    else if Clipboard contains ???
+        Clipboard := "N/A"
+    Send, ^v
+    Sleep, 600
+    Send, {Right}
+    Sleep, 250
+    Clipboard := userID
+    if (Clipboard == "")
+        Clipboard := "N/A"
+    else if Clipboard contains ???
+        Clipboard := "N/A"
+    Send, ^v
+    Sleep, 600
+    Send, {Right}
+    Sleep, 250
+    Clipboard := "Requiem"
+    Send, ^v
+    Sleep, 600
+    Send, {Right}
+    Sleep, 250
+    Clipboard := reason
+    if (Clipboard == "")
+        Clipboard := "N/A"
+    else if Clipboard contains ???
+        Clipboard := "N/A"
+    Send, ^v
+    Sleep, 600
+    Send, {Right}
+    Sleep, 250
+    alreadyopen = 1
 }
-
+CLipboard := oldClipboard
 Goto, start
 Return
 fof:
 
 ; Add fof ban to shared list
+if stephmode
+{
+    WinActivate, ahk_exe firefox.exe
+    WinActivate, ahk_exe msedge.exe
+    WinActivate, ahk_exe chrome.exe
+    Winactivate, ahk_exe operagx.exe
+    Sleep, 1500
+}
+else if not stephmode
+{
+    url := "https://docs.google.com/spreadsheets/d/1V5Z61CKmJoNZn7L3PWziJdbHRVzYuxaZU4qTOIRHfWg/edit#gid=125271616"
+    ; a temporary file, running directory must be writeable
+    outputFile := "a$$$$$$.html"
+    if (FileExist(outputFile))
+        FileDelete, %outputFile%
 
-url := "https://docs.google.com/spreadsheets/d/1V5Z61CKmJoNZn7L3PWziJdbHRVzYuxaZU4qTOIRHfWg/edit#gid=125271616"
-; a temporary file, running directory must be writeable
-outputFile := "a$$$$$$.html"
-if (FileExist(outputFile))
-    FileDelete, %outputFile%
+    FileAppend,
+    (
+    <html>
+    <body>
+    <script>
+    document.location.href="
+    ),%outputFile%
+    FileAppend,%url%,%outputFile%
+    FileAppend,
+    (
+    "
+    </script>
+    </body>
+    </html>
+    ),%outputFile%
 
-FileAppend,
-(
-<html>
-<body>
-<script>
-document.location.href="
-),%outputFile%
-FileAppend,%url%,%outputFile%
-FileAppend,
-(
-"
-</script>
-</body>
-</html>
-),%outputFile%
+    cmdToRun := "cmd /c " . outputFile
+    run, %cmdToRun%
+    Sleep, 8000
+    ; remove temporary file
+    if (FileExist(outputFile))
+        FileDelete, %outputFile%
 
-cmdToRun := "cmd /c " . outputFile
-run, %cmdToRun%
-
-Sleep, 8000
-
-; remove temporary file
-if (FileExist(outputFile))
-    FileDelete, %outputFile%
-
-Sleep, 3000
-Send, {CtrlDown}{Down}{CtrlUp}{Down}
-
+    Sleep, 3000
+    Send, {CtrlDown}{Down}{CtrlUp}{Down}
+}
 if fofname Contains ???
 {
     fofname = N/A
@@ -487,11 +475,14 @@ if fofreason contains ???
     Sleep, 200
     Send, {Raw}%fofreason%
     Sleep, 250
+    Send, {Right}
 }
 
 Goto, start
+return
+
+#x::
 GuiClose:
 GuiEscape:
 ExitApp
 Return
-#x::ExitApp
