@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.11.1] - 2022-08-19
+## [2.0.1] - 2022-08-19
 
 
 ### Changed
@@ -8,7 +8,8 @@
 - Bug fix in autospiker script
 - Bug fix in staffcheck script
 
-## [1.11.0] - 2022-08-19
+
+## [2.0] - 2022-08-19
 
 
 ### Added
