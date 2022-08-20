@@ -45,7 +45,6 @@ if (A_GuiEvent = "DoubleClick")
     Run, "Scripts\%file%.exe"
 }
 
-
 return
 
 ButtonCheckforupdates:
