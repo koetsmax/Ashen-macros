@@ -16,7 +16,7 @@ IfNotExist, settings.ini
 
 IniRead, mutehotkey, settings.ini, spiker, mutehotkey
 IniRead, FirstTimeLaunch, settings.ini, spiker, FirstTimeLaunch
-if (FirstTimeLaunch == 1)
+if (FirstTimeLaunch != 0)
     Tutorial()
 
 OnMessage(0x202, "ClickEvent")

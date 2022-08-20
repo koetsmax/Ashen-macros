@@ -1,16 +1,26 @@
 # Changelog
 
-## [2.0.1] - 2022-08-19
+## [2.0.2] - 2022-08-21
 
+### Added
+- Added launcher
+
+### Changed
+- (not) good to check message can no longer be error
+- Checking if good to check message contains right variables
+- Autospiker will now go through first time setup if INI does not contain valid variable
+
+### Removed
+- Self compiler
+
+## [2.0.1] - 2022-08-19
 
 ### Changed
 
 - Bug fix in autospiker script
 - Bug fix in staffcheck script
 
-
 ## [2.0] - 2022-08-19
-
 
 ### Added
 

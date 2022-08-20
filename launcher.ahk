@@ -1,11 +1,22 @@
 #SingleInstance, Force
 SendMode Input
 SetWorkingDir, %A_ScriptDir%
+onlaunch = 1
+goto, buttoncheckforupdates
+start:
+onlaunch = 0
+Loop, %A_ScriptDir%\Scripts\*.*
+{
+    if A_LoopFileName contains .exe
+    {
+        OutputDebug, %A_LoopFileName%
+        FileDelete, Scripts\%A_LoopFileName%
+    }
+}
 
 buttoncontinueonthisversion:
 Gui, Destroy
-start:
-gui, +resize
+gui, Add, Text,, Please click the file that you want to launch
 Gui, Add, ListView, r12 w200 gMyListView, Name
 Loop, %A_ScriptDir%\Scripts\*.*
 {
@@ -24,21 +35,16 @@ MyListView:
 if (A_GuiEvent = "DoubleClick")
 {
     LV_GetText(RowText, A_EventInfo)  ; Get the text from the row's first field.
-    MsgBox,4,, Do you want to compile %RowText% into an executable file?
-    IfMsgBox, Yes
-    {
-        If not FileExist("Executables")
-            FileCreateDir, Executables
-        Sleep, 500
-        If not FileExist("Executables\Logs")
-            FileCreateDir, Executables\Logs
-        Sleep, 500
-        If not FileExist("Executables\settings.ini")
-            FileAppend, , Executables\settings.ini
-        Sleep, 500
-        Run, "AutoHotKey\Compiler\Ahk2Exe" /in "Scripts\%RowText%" /out "Executables\%RowText%"
-    }
+    Run, "AutoHotKey\Compiler\Ahk2Exe" /in "Scripts\%RowText%" /out "Scripts\%RowText%"
+
+    length := StrLen(RowText)
+    length := length -4
+    OutputDebug, %length%
+    file := SubStr(RowText, 1, length)
+    Sleep, 500
+    Run, "Scripts\%file%.exe"
 }
+
 
 return
 
@@ -58,7 +64,7 @@ if (Local == "")
 Version1 := github
 Version2 := Local
 Latest := VersionCompare(Version1, Version2)
-if (latest == 0)
+if (latest == 0 && onlaunch == 0)
     MsgBox, You are currently on the latest release
 else if (Latest == 1)
 {
@@ -67,11 +73,13 @@ else if (Latest == 1)
     Gui, Add, Button,x+10p, Continue on this version
     Gui, Show
 }
-else if (Latest == 2)
+else if (Latest == 2 && onlaunch == 0)
 {
     MsgBox, You are currently ahead of the github release
     Goto, start
 }
+Else
+    goto, start
 return
 
 VersionCompare(version1, version2)
@@ -116,10 +124,19 @@ return
 
 buttondownloadthenewversion:
 Gui, Destroy
-run, https://github.com/koetsmax/Ashen-macros/releases//latest
+run, https://github.com/koetsmax/Ashen-macros/releases/latest
 
 Return
 #x::
 GuiEscape:
 GuiClose:
+Loop, %A_ScriptDir%\Scripts\*.*
+{
+    if A_LoopFileName contains .exe
+    {
+        OutputDebug, %A_LoopFileName%
+        FileDelete, Scripts\%A_LoopFileName%
+    }
+}
+
 ExitApp

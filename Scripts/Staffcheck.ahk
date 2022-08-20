@@ -104,6 +104,29 @@ Return
 ButtonContinue:
 Gui, Submit
 
+if gtc not contains userID
+    error++
+if gtc not contains xboxGT
+    error++
+if ngtc not contains userID
+    error++
+if ngtc not contains xboxGT
+    error++
+if ngtc not contains Reason
+    error++
+
+if (error >= 1)
+{
+    MsgBox, (Not) Good to check message does not include the right variable(s), make sure your capitalization is correct!
+    Goto, start
+}
+
+if (gtc == "ERROR" or ngtc == "ERROR")
+{
+    MsgBox, gtc or ngtc message can not be ERROR. Please reset to default.
+    Goto, start
+}
+
 commandschannel = {#}%channel%
 userID := userID
 ; Do some checks on the userID
@@ -488,7 +511,7 @@ return
 
 buttondownloadthenewversion:
 Gui, Destroy
-run, https://github.com/koetsmax/Ashen-macros/releases//latest
+run, https://github.com/koetsmax/Ashen-macros/releases/latest
 
 #x::
 log.addLogEntry("Script force closed by using Windows + X")
