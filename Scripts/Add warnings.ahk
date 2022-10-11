@@ -16,6 +16,11 @@ start:
 
 ; Variables
 
+PVPRule = **Rule {#}1:** No PVP or hostile action towards any players. This rule, like all others **also applies after server shutdown.
+AFKRule = **Rule {#}2:** No extended periods of AFK, leeching or use of macros.
+leaveWarnRule = **Rule {#}5:** You must give a warning before leaving a ship using {!}leave 10 minutes in advance.
+followSellPlanRule = **Rule {#}6:** The <{#}906559855186288690> must be followed while on an active fleet.
+
 tutorial = 
 (
 The input tab is to enter the ID and gamertag of the user you want to check.
@@ -31,11 +36,12 @@ Gui, Add, Tab3,, Input|How to use
 Gui, Add, Text,, Discord ID(s):
 Gui, Add, Text,, Warning to add:
 Gui, Add, Text,, Channel:
-Gui, Add, Checkbox, vchecklist Checked y+15p, Check log hist before adding warning
-Gui, Add, Edit, vuserIDs ym x100 y31
+Gui, add, text,, Common warnings:
+Gui, Add, Checkbox, vchecklist Checked y+15, Check log hist before adding warning
+Gui, Add, Edit, vuserIDs ym x125 y31
 Gui, Add, Edit, vwarning
 Gui, Add, ComboBox, vchannel, staff-commands|on-duty-commands||captain-commands|admin-commands
-
+Gui, Add, Combobox, vrule, PVP|AFK|leave warning||Sell plan|Custom
 Gui, Tab, 2
 Gui, Add, Text,, %tutorial%
 Gui, Tab
@@ -48,6 +54,17 @@ Gui, Submit
 
 commandschannel = {#}%channel%
 
+
+if (rule == "leave warning")
+    warning := leaveWarnRule
+else if (rule == "PVP")
+    warning := PVPRule
+else if (rule == "AFK")
+    warning := AFKRule
+else if (rule == "Sell plan")
+    warning := followSellPlanRule
+
+OutputDebug, warning = %warning%
 MsgBox, DO NOT TOUCH YOUR MOUSE OR KEYBOARD WHEN THIS SCRIPT IS RUNNING. ONLY TOUCH YOUR MOUSE AND OR KEYBOARD WHEN ONE OF THESE BOXES HAVE POPPED UP. The script will now start
 Sleep, 1000
 
@@ -99,7 +116,7 @@ addWarn(x,y)
     Send, {Right}{Down}{Tab}
     Sleep, 500
     Send, %y%
-    Sleep, 300
+    Sleep, 600
     Send, {enter}{enter}
 }
 

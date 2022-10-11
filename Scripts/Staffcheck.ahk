@@ -60,6 +60,7 @@ sotofficial = {#}official-swag
 report = loghistory report
 noteslist = notes list
 notesnew = notes new
+search = search
 pagenumber = 1
 log.addLogEntry("Variables initialized")
 IniRead, gtc, settings.ini , staffcheck, goodtocheckmessage
@@ -280,12 +281,21 @@ cleartypingbar()
 WinActivate, ahk_exe Discord.exe
 OutputDebug, entered discord
 Sleep, 250
-Send, {!}search %userID%{enter}
-log.addLogEntry("Executed command: !search")
+Send, {/}%search%
+Sleep, 1200
+Send, {enter}
+Send, member
+Sleep, 350
+Send, {enter}
+Send, %userID%
 Sleep, 250
-Send, {!}xsearch %xboxGT%{enter}
-log.addLogEntry("Executed command: !xsearch")
+Send, {Tab}{Tab}{Tab}
 Sleep, 250
+Send, %xboxGT%
+Sleep, 250
+send, {enter}
+Sleep, 250
+log.addLogEntry("Executed command: /search")
 MsgBox, 0, Ashen commands, Press OK once you have looked through the Ashen commands
 
 if !all
