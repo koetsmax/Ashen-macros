@@ -129,13 +129,13 @@ Return
 #x::
 GuiEscape:
 GuiClose:
-Loop, %A_ScriptDir%\Scripts\*.*
-{
-    if A_LoopFileName contains .exe
-    {
-        OutputDebug, %A_LoopFileName%
-        FileDelete, Scripts\%A_LoopFileName%
-    }
-}
+; Loop, %A_ScriptDir%\Scripts\*.*
+; {
+;     if A_LoopFileName contains .exe
+;     {
+;         OutputDebug, %A_LoopFileName%
+;         FileDelete, Scripts\%A_LoopFileName%
+;     }
+; }
 
 ExitApp

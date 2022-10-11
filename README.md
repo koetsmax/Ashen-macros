@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.0] - 2022-10-11
+
+### Fixed
+- Fixed breaking change with search changing to slash commands
+
+
 ## [2.0.2] - 2022-08-21
 
 ### Added
@@ -20,7 +26,7 @@
 - Bug fix in autospiker script
 - Bug fix in staffcheck script
 
-## [2.0] - 2022-08-19
+## [2.0.0] - 2022-08-19
 
 ### Added
 

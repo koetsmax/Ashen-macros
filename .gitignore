@@ -1,6 +1,8 @@
 .vscode
 *.log
 TODO.txt
-cheese.ahk
+Archives/
 launcherv2.ahk
-Executables\*.*
+launcher.ahk
+launcher.exe
+channel switch

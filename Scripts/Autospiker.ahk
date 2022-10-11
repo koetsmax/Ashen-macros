@@ -262,7 +262,7 @@ if portspike
     Send, ^x
     Sleep, 500
     OutputDebug, set up livetcpudpwatch
-    
+    sleep, 500
 }
 
 WinActivate, Sea of Thieves
@@ -704,13 +704,14 @@ Tutorial()
     }
 
     WinWaitActive, Sea of Thieves
+    OutputDebug, window found
     Sleep, 5000
     WinGet, iswinmax, MinMax, Sea of Thieves
     WinRestore, Sea of Thieves
     OutputDebug, %iswinmax%
     WinGetPos, X, Y, W, H, Sea of Thieves
     WinActivate, Sea of Thieves
-
+    OutputDebug, %X%
     if (X == 0 and iswinmax == 0)
     {
         Sleep, 1500
