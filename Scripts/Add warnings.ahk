@@ -113,7 +113,11 @@ addWarn(x,y)
     Sleep, 500
     Send, %x%
     Sleep, 500
-    Send, {Right}{Down}{Tab}
+    Send, {Right}
+    Sleep, 500
+    Send, {Down}
+    Sleep, 500
+    Send, {Tab}
     Sleep, 500
     Send, %y%
     Sleep, 600
