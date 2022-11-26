@@ -285,16 +285,20 @@ Send, {/}%search%
 Sleep, 1200
 Send, {enter}
 Send, member
-Sleep, 350
+Sleep, 450
 Send, {enter}
 Send, %userID%
-Sleep, 250
-Send, {Tab}{Tab}{Tab}
-Sleep, 250
+Sleep, 450
+Send, {Tab}
+Sleep, 350
+Send, {tab}
+Sleep, 600
+Send, {tab}
+Sleep, 600
 Send, %xboxGT%
-Sleep, 250
+Sleep, 600
 send, {enter}
-Sleep, 250
+Sleep, 450
 log.addLogEntry("Executed command: /search")
 MsgBox, 0, Ashen commands, Press OK once you have looked through the Ashen commands
 

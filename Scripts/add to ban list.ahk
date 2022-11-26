@@ -271,6 +271,11 @@ Loop, parse, reqban, `=
         gamertag := SubStr(ban, 4)
         gamertag := Trim(gamertag)
         }
+        ; else if ban contains DC:
+        ; {
+        ; DCID := SubStr(ban, 4)
+        ; DCID := Trim(DCID)
+        ; }
         else if ban is integer
             userID = %ban%
         else if ban contains #
