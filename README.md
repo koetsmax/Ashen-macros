@@ -1,3 +1,5 @@
+# THIS PROJECT IS OUTDATED. USE 2.0 INSTEAD
+
 # Changelog
 
 ## [2.1.0] - 2022-10-11
